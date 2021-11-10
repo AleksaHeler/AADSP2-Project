@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 	int num_of_channels = 4;
 	//-------------------------------------------------
 	
-	// Getting values from command line
+	// Getting values from command line and pass it to processing initializer
 	//-------------------------------------------------
 	if (argc >= 4)
 	{
@@ -75,6 +75,7 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
+	initialize_processing(gain, mode);
 	//-------------------------------------------------
 	
 
@@ -145,8 +146,7 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			// TODO: processing
-			processing(sampleBuffer, sampleBuffer, gain, mode);
+			processing(sampleBuffer, sampleBuffer);
 
 			for(int j=0; j<BLOCK_SIZE; j++)
 			{

@@ -6,7 +6,8 @@
 #include "common.h"
 
 
-void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE], double gain, int mode);
+void initialize_processing(double gain, int mode);
+void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE]);
 
 
 #endif // PROCESSING_H

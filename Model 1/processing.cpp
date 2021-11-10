@@ -1,38 +1,47 @@
 #include "processing.h"
 
 
-float distorsion_threshold_1 = 1.0f / 8.0f;		// Original: 1/3
-float distorsion_threshold_2 = 3.0f / 8.0f;		// Original: 2/3
+const float distorsion_threshold_1 = 1.0f / 8.0f;		// Original: 1/3
+const float distorsion_threshold_2 = 3.0f / 8.0f;		// Original: 2/3
 
 const double stage_two_gain = pow(10.0, -2.0 / 20.0);	// -2dB for C and LFE channel
+double input_L_with_stage_two_gain = 0;
+double input_R_with_stage_two_gain = 0;
 
+double processing_gain = 1;
+int processing_mode = OM_2_2_0;
 
-void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE], double gain, int mode)
+void initialize_processing(double gain, int mode)
 {
+	processing_gain = gain;
+	processing_mode = mode;
+}
 
+
+void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE])
+{
 	// calculate L and R after gain and apply it to all channels
 	for (int i = 0; i < BLOCK_SIZE; i++)
 	{
-		double input_L_with_gain = input[L_CHANNEL][i] * gain;
-		double input_R_with_gain = input[R_CHANNEL][i] * gain;
-		double input_L_with_stage_two_gain = input_L_with_gain * stage_two_gain;
-		double input_R_with_stage_two_gain = input_R_with_gain * stage_two_gain;
-
 		// L, R, LS, RS are always included
-		output[L_CHANNEL][i] = input_L_with_gain;
-		output[LS_CHANNEL][i] = -input_L_with_gain;		// LS and RS are inverted
-		output[R_CHANNEL][i] = input_R_with_gain;
-		output[RS_CHANNEL][i] = -input_R_with_gain;
+		output[L_CHANNEL][i] = input[L_CHANNEL][i] * processing_gain;
+		output[LS_CHANNEL][i] = -output[L_CHANNEL][i];						// LS and RS are inverted
+		output[R_CHANNEL][i] = input[R_CHANNEL][i] * processing_gain;
+		output[RS_CHANNEL][i] = -output[R_CHANNEL][i];
+
+		// Calculate stage two gain for center channel (-2dB)
+		input_L_with_stage_two_gain = output[L_CHANNEL][i] * stage_two_gain;
+		input_R_with_stage_two_gain = output[R_CHANNEL][i] * stage_two_gain;
 
 		// If C is included
-		if (mode == OM_3_2_0 || mode == OM_3_2_1)
+		if (processing_mode == OM_3_2_0 || processing_mode == OM_3_2_1)
 		{
 			// Central channel is L+R
 			output[C_CHANNEL][i] = input_L_with_stage_two_gain + input_R_with_stage_two_gain;
 		}
 		
 		// If LFE is included
-		if (mode == OM_2_2_1 || mode == OM_3_2_1)
+		if (processing_mode == OM_2_2_1 || processing_mode == OM_3_2_1)
 		{
 			output[LFE_CHANNEL][i] = input_R_with_stage_two_gain;
 
