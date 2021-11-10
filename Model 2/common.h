@@ -14,6 +14,13 @@
 #define RS_CHANNEL		5		// Back right
 
 
+// DSP type definitions
+typedef short DSPshort;					// DSP integer
+typedef unsigned short DSPushort;		// DSP unsigned integer
+typedef int DSPint;						// native integer
+typedef double DSPfract;				// DSP fixed-point fractional
+
+
 enum OUTPUT_MODES
 {
 	OM_2_2_0 = 0,			// L, R, LS, RS

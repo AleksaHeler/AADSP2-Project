@@ -1,37 +1,37 @@
 #include "processing.h"
 
 
-const float distorsion_threshold_1 = 1.0f / 8.0f;		// Original: 1/3
-const float distorsion_threshold_2 = 3.0f / 8.0f;		// Original: 2/3
+const DSPfract distorsion_threshold_1 = 1.0f / 8.0f;		// Original: 1/3
+const DSPfract distorsion_threshold_2 = 3.0f / 8.0f;		// Original: 2/3
 
-const double stage_two_gain = pow(10.0, -2.0 / 20.0);	// -2dB for C and LFE channel
-double input_L_with_stage_two_gain = 0;
-double input_R_with_stage_two_gain = 0;
+const DSPfract stage_two_gain = pow(10.0, -2.0 / 20.0);	// -2dB for C and LFE channel
+DSPfract input_L_with_stage_two_gain = 0;
+DSPfract input_R_with_stage_two_gain = 0;
 
-double processing_gain = 1;
-int processing_mode = OM_2_2_0;
+DSPfract processing_gain = 1;
+DSPint processing_mode = OM_2_2_0;
 
-void initialize_processing(double gain, int mode)
+void initialize_processing(DSPfract gain, DSPint mode)
 {
 	processing_gain = gain;
 	processing_mode = mode;
 }
 
 
-void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE])
+void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 {
-	double* p_L_channel_in = input[L_CHANNEL];
-	double* p_R_channel_in = input[R_CHANNEL];
+	DSPfract* p_L_channel_in = input[L_CHANNEL];
+	DSPfract* p_R_channel_in = input[R_CHANNEL];
 
-	double* p_L_channel_out = output[L_CHANNEL];
-	double* p_R_channel_out = output[R_CHANNEL];
-	double* p_LS_channel_out = output[LS_CHANNEL];
-	double* p_RS_channel_out = output[RS_CHANNEL];
-	double* p_C_channel_out = output[C_CHANNEL];
-	double* p_LFE_channel_out = output[LFE_CHANNEL];
+	DSPfract* p_L_channel_out = output[L_CHANNEL];
+	DSPfract* p_R_channel_out = output[R_CHANNEL];
+	DSPfract* p_LS_channel_out = output[LS_CHANNEL];
+	DSPfract* p_RS_channel_out = output[RS_CHANNEL];
+	DSPfract* p_C_channel_out = output[C_CHANNEL];
+	DSPfract* p_LFE_channel_out = output[LFE_CHANNEL];
 
 	// calculate L and R after gain and apply it to all channels
-	for (int i = 0; i < BLOCK_SIZE; i++)
+	for (DSPint i = 0; i < BLOCK_SIZE; i++)
 	{
 		// L, R, LS, RS are always included (LS and RS are inverted)
 		*p_L_channel_out	= *p_L_channel_in++ * processing_gain;

@@ -9,8 +9,7 @@
 #include "processing.h"
 
 
-double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
-
+DSPfract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 
 // Command line arguments: [input filename] [output filename] [gain: 0 to -inf dB, defualt -4] [output mode: defualt 2_2_0] //
 int main(int argc, char* argv[])
@@ -39,10 +38,10 @@ int main(int argc, char* argv[])
 
 	// Parameters
 	//-------------------------------------------------
-	double gain_dB = -4;
-	double gain = pow(10.0, gain_dB / 20.0);			// Convert dB to floating point
-	int mode = OM_2_2_0;
-	int num_of_channels = 4;
+	DSPfract gain_dB = -4;
+	DSPfract gain = pow(10.0, gain_dB / 20.0);			// Convert dB to floating point
+	DSPint mode = OM_2_2_0;
+	DSPint num_of_channels = 4;
 	//-------------------------------------------------
 	
 	// Getting values from command line and pass it to processing initializer
@@ -89,7 +88,7 @@ int main(int argc, char* argv[])
 	
 
 	// Init channel buffers
-	for(int i=0; i<MAX_NUM_CHANNEL; i++)
+	for(DSPint i=0; i<MAX_NUM_CHANNEL; i++)
 		memset(&sampleBuffer[i],0,BLOCK_SIZE);
 
 	// Open input and output wav files
@@ -110,9 +109,9 @@ int main(int argc, char* argv[])
 	outputWAVhdr = inputWAVhdr;
 	outputWAVhdr.fmt.NumChannels = num_of_channels; // inputWAVhdr.fmt.NumChannels; // change number of channels
 
-	int oneChannelSubChunk2Size = inputWAVhdr.data.SubChunk2Size/inputWAVhdr.fmt.NumChannels;
-	int oneChannelByteRate = inputWAVhdr.fmt.ByteRate/inputWAVhdr.fmt.NumChannels;
-	int oneChannelBlockAlign = inputWAVhdr.fmt.BlockAlign/inputWAVhdr.fmt.NumChannels;
+	DSPint oneChannelSubChunk2Size = inputWAVhdr.data.SubChunk2Size/inputWAVhdr.fmt.NumChannels;
+	DSPint oneChannelByteRate = inputWAVhdr.fmt.ByteRate/inputWAVhdr.fmt.NumChannels;
+	DSPint oneChannelBlockAlign = inputWAVhdr.fmt.BlockAlign/inputWAVhdr.fmt.NumChannels;
 	
 	outputWAVhdr.data.SubChunk2Size = oneChannelSubChunk2Size*outputWAVhdr.fmt.NumChannels;
 	outputWAVhdr.fmt.ByteRate = oneChannelByteRate*outputWAVhdr.fmt.NumChannels;
@@ -127,17 +126,17 @@ int main(int argc, char* argv[])
 	// Processing loop
 	//-------------------------------------------------	
 	{
-		int sample;
-		int BytesPerSample = inputWAVhdr.fmt.BitsPerSample/8;
-		const double SAMPLE_SCALE = -(double)(1 << 31);		//2^31
-		int iNumSamples = inputWAVhdr.data.SubChunk2Size/(inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample/8);
+		DSPint sample;
+		DSPint BytesPerSample = inputWAVhdr.fmt.BitsPerSample/8;
+		const DSPfract SAMPLE_SCALE = -(DSPfract)(1 << 31);		//2^31
+		DSPint iNumSamples = inputWAVhdr.data.SubChunk2Size/(inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample/8);
 		
 		// exact file length should be handled correctly...
-		for(int i=0; i<iNumSamples/BLOCK_SIZE; i++)
+		for(DSPint i=0; i<iNumSamples/BLOCK_SIZE; i++)
 		{	
-			for(int j=0; j<BLOCK_SIZE; j++)
+			for(DSPint j=0; j<BLOCK_SIZE; j++)
 			{
-				for(int k=0; k<inputWAVhdr.fmt.NumChannels; k++)
+				for(DSPint k=0; k<inputWAVhdr.fmt.NumChannels; k++)
 				{	
 					sample = 0; //debug
 					fread(&sample, BytesPerSample, 1, wav_in);
@@ -148,9 +147,9 @@ int main(int argc, char* argv[])
 
 			processing(sampleBuffer, sampleBuffer);
 
-			for(int j=0; j<BLOCK_SIZE; j++)
+			for(DSPint j=0; j<BLOCK_SIZE; j++)
 			{
-				for(int k=0; k<outputWAVhdr.fmt.NumChannels; k++)
+				for(DSPint k=0; k<outputWAVhdr.fmt.NumChannels; k++)
 				{	
 					sample = sampleBuffer[k][j] * SAMPLE_SCALE ;	// crude, non-rounding 			
 					sample = sample >> (32 - inputWAVhdr.fmt.BitsPerSample);
