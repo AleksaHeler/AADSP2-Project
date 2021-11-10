@@ -2,10 +2,11 @@
 #define PROCESSING_H
 
 
-#include <stdio.h>
+#include <math.h>
+#include "common.h"
 
 
-void processing();
+void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE], double gain, int mode);
 
 
 #endif // PROCESSING_H
