@@ -10,11 +10,14 @@ double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 
 int main(int argc, char* argv[])
 {
-	FILE *wav_in=NULL;
-	FILE *wav_out=NULL;
+	// Input/output wav files
+	//-------------------------------------------------
+	FILE* wav_in = NULL;
+	FILE* wav_out = NULL;
 	char WavInputName[256];
 	char WavOutputName[256];
-	WAV_HEADER inputWAVhdr,outputWAVhdr;	
+	WAV_HEADER inputWAVhdr, outputWAVhdr;
+	//-------------------------------------------------
 
 	// Init channel buffers
 	for(int i=0; i<MAX_NUM_CHANNEL; i++)
@@ -74,6 +77,7 @@ int main(int argc, char* argv[])
 				}
 			}
 
+			// TODO: processing
 			//processing();
 
 			for(int j=0; j<BLOCK_SIZE; j++)
