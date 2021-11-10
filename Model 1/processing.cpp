@@ -20,57 +20,67 @@ void initialize_processing(double gain, int mode)
 
 void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE])
 {
+	double* p_L_channel_in = input[L_CHANNEL];
+	double* p_R_channel_in = input[R_CHANNEL];
+
+	double* p_L_channel_out = output[L_CHANNEL];
+	double* p_R_channel_out = output[R_CHANNEL];
+	double* p_LS_channel_out = output[LS_CHANNEL];
+	double* p_RS_channel_out = output[RS_CHANNEL];
+	double* p_C_channel_out = output[C_CHANNEL];
+	double* p_LFE_channel_out = output[LFE_CHANNEL];
+
 	// calculate L and R after gain and apply it to all channels
 	for (int i = 0; i < BLOCK_SIZE; i++)
 	{
-		// L, R, LS, RS are always included
-		output[L_CHANNEL][i] = input[L_CHANNEL][i] * processing_gain;
-		output[LS_CHANNEL][i] = -output[L_CHANNEL][i];						// LS and RS are inverted
-		output[R_CHANNEL][i] = input[R_CHANNEL][i] * processing_gain;
-		output[RS_CHANNEL][i] = -output[R_CHANNEL][i];
+		// L, R, LS, RS are always included (LS and RS are inverted)
+		*p_L_channel_out	= *p_L_channel_in++ * processing_gain;
+		*p_LS_channel_out++	= -*p_L_channel_out;
+		*p_R_channel_out	= *p_R_channel_in++ * processing_gain;
+		*p_RS_channel_out++	= -*p_R_channel_out;
 
 		// Calculate stage two gain for center channel (-2dB)
-		input_L_with_stage_two_gain = output[L_CHANNEL][i] * stage_two_gain;
-		input_R_with_stage_two_gain = output[R_CHANNEL][i] * stage_two_gain;
+		input_L_with_stage_two_gain = *p_L_channel_out++ * stage_two_gain;
+		input_R_with_stage_two_gain = *p_R_channel_out++ * stage_two_gain;
 
 		// If C is included
 		if (processing_mode == OM_3_2_0 || processing_mode == OM_3_2_1)
 		{
 			// Central channel is L+R
-			output[C_CHANNEL][i] = input_L_with_stage_two_gain + input_R_with_stage_two_gain;
+			*p_C_channel_out++ = input_L_with_stage_two_gain + input_R_with_stage_two_gain;
 		}
 		
 		// If LFE is included
 		if (processing_mode == OM_2_2_1 || processing_mode == OM_3_2_1)
 		{
-			output[LFE_CHANNEL][i] = input_R_with_stage_two_gain;
+			*p_LFE_channel_out = input_R_with_stage_two_gain;
 
 			// Apply distorsion to LFE channel signal
-			if (output[LFE_CHANNEL][i] > distorsion_threshold_1)
+			if (*p_LFE_channel_out > distorsion_threshold_1)
 			{
-				if (output[LFE_CHANNEL][i] > distorsion_threshold_2) // positive clipping
-					output[LFE_CHANNEL][i] = 1.0f;
+				if (*p_LFE_channel_out > distorsion_threshold_2) // positive clipping
+					*p_LFE_channel_out = 1.0f;
 
 				else // soft knee (positive)
-					output[LFE_CHANNEL][i] = (3.0f - (2.0f - 3.0f * output[LFE_CHANNEL][i]) * (2.0f - 3.0f * output[LFE_CHANNEL][i])) / 3.0f;
+					*p_LFE_channel_out = (3.0f - (2.0f - 3.0f * *p_LFE_channel_out) * (2.0f - 3.0f * *p_LFE_channel_out)) / 3.0f;
 			}
 
 			else
 			{
-				if (output[LFE_CHANNEL][i] < -distorsion_threshold_1)
+				if (*p_LFE_channel_out < -distorsion_threshold_1)
 				{
-					if (output[LFE_CHANNEL][i] < -distorsion_threshold_2) // negative clipping
-						output[LFE_CHANNEL][i] = -1.0f;
+					if (*p_LFE_channel_out < -distorsion_threshold_2) // negative clipping
+						*p_LFE_channel_out = -1.0f;
 
 					else // soft knee (negative)
-						output[LFE_CHANNEL][i] = -(3.0f - (2.0f + 3.0f * output[LFE_CHANNEL][i]) * (2.0f + 3.0f * output[LFE_CHANNEL][i])) / 3.0f;
+						*p_LFE_channel_out = -(3.0f - (2.0f + 3.0f * *p_LFE_channel_out) * (2.0f + 3.0f * *p_LFE_channel_out)) / 3.0f;
 				}
 
 				else // linear region (-1/3..1/3)
-					output[LFE_CHANNEL][i] *= 2.0f;
+					*p_LFE_channel_out *= 2.0f;
 			}
 
-			output[LFE_CHANNEL][i] /= 2.0f; // divide all by 2 to compensate for extra 6 dB gain boost
+			*p_LFE_channel_out++ /= 2.0f; // divide all by 2 to compensate for extra 6 dB gain boost
 		}
 	}
 }

@@ -6,12 +6,12 @@
 : Execute Model 0, Model 1 and Model 2
 @cd "Model 0"\Debug
 @echo "Running model 0"
-@"Model 0.exe" ..\..\Audio\speech_2ch.wav ..\out.wav 0 0
+@"Model 0.exe" ..\..\Audio\speech_2ch.wav ..\out.wav -6 3
 @cd ..\..
 
 @cd "Model 1"\Debug
 @echo "Running model 1"
-@"Model 1.exe" ..\..\Audio\speech_2ch.wav ..\out.wav 0 0
+@"Model 1.exe" ..\..\Audio\speech_2ch.wav ..\out.wav -6 3
 @cd ..\..
 
 : cd model_2_3\Debug
