@@ -2,7 +2,6 @@
 #define PROCESSING_H
 
 
-#include <math.h>
 #include "common.h"
 
 

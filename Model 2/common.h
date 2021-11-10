@@ -2,6 +2,16 @@
 #define COMMON_H
 
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+//#include "stdfix_emu.h"
+//#include "fixed_point_math.h"
+#include "WAVheader.h"
+
+
 #define BLOCK_SIZE 16
 #define MAX_NUM_CHANNEL 8
 

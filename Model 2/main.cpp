@@ -1,11 +1,5 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
 #include "common.h"
-#include "WAVheader.h"
 #include "processing.h"
 
 
@@ -130,6 +124,9 @@ int main(int argc, char* argv[])
 		DSPint BytesPerSample = inputWAVhdr.fmt.BitsPerSample/8;
 		const DSPfract SAMPLE_SCALE = -(DSPfract)(1 << 31);		//2^31
 		DSPint iNumSamples = inputWAVhdr.data.SubChunk2Size/(inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample/8);
+		
+		// TODO: when reading file and converting to DSPfract, we have to scale it down, 
+		// and after when writing to scale it back up or to 16bits idk.
 		
 		// exact file length should be handled correctly...
 		for(DSPint i=0; i<iNumSamples/BLOCK_SIZE; i++)
