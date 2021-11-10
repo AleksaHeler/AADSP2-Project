@@ -1,0 +1,9 @@
+#ifndef COMMON_H
+#define COMMON_H
+
+
+#define BLOCK_SIZE 16
+#define MAX_NUM_CHANNEL 8
+
+
+#endif // COMMON_H

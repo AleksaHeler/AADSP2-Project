@@ -1,12 +1,14 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "WAVheader.h"
 
-#define BLOCK_SIZE 16
-#define MAX_NUM_CHANNEL 8
+#include "common.h"
+#include "WAVheader.h"
+#include "processing.h"
+
 
 double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
+
 
 int main(int argc, char* argv[])
 {
@@ -78,7 +80,7 @@ int main(int argc, char* argv[])
 			}
 
 			// TODO: processing
-			//processing();
+			processing();
 
 			for(int j=0; j<BLOCK_SIZE; j++)
 			{

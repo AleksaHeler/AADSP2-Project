@@ -1,3 +1,7 @@
+#ifndef WAV_HEADER_H
+#define WAV_HEADER_H
+
+
 #include <stdio.h>
 #include <windows.h>
 
@@ -36,3 +40,6 @@ struct WAV_HEADER
 int ReadWavHeader (FILE *refFile, WAV_HEADER &inWAVhdr);
 int WriteWavHeader (FILE *refFile, WAV_HEADER &inWAVhdr);
 FILE* OpenWavFileForRead (char *FileName,char *stMode );
+
+
+#endif // WAV_HEADER_H
