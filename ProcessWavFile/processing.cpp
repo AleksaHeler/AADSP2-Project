@@ -1,6 +1,9 @@
 #include "processing.h"
 
 
+float distorsion_threshold_1 = 1.0f / 8.0f;
+float distorsion_threshold_2 = 2.0f / 6.0f;
+
 const double stage_two_gain = pow(10.0, -2.0 / 20.0);	// -2dB for C and LFE channel
 
 
@@ -31,8 +34,34 @@ void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE], double 
 		// If LFE is included
 		if (mode == OM_2_2_1 || mode == OM_3_2_1)
 		{
-			// TODO: add distorsion to input_R_with_stage_two_gain before applying to output
 			output[LFE_CHANNEL][i] = input_R_with_stage_two_gain;
+
+			// Apply distorsion to LFE channel signal
+			if (output[LFE_CHANNEL][i] > distorsion_threshold_1)
+			{
+				if (output[LFE_CHANNEL][i] > distorsion_threshold_2) // positive clipping
+					output[LFE_CHANNEL][i] = 1.0f;
+
+				else // soft knee (positive)
+					output[LFE_CHANNEL][i] = (3.0f - (2.0f - 3.0f * output[LFE_CHANNEL][i]) * (2.0f - 3.0f * output[LFE_CHANNEL][i])) / 3.0f;
+			}
+
+			else
+			{
+				if (output[LFE_CHANNEL][i] < -distorsion_threshold_1)
+				{
+					if (output[LFE_CHANNEL][i] < -distorsion_threshold_2) // negative clipping
+						output[LFE_CHANNEL][i] = -1.0f;
+
+					else // soft knee (negative)
+						output[LFE_CHANNEL][i] = -(3.0f - (2.0f + 3.0f * output[LFE_CHANNEL][i]) * (2.0f + 3.0f * output[LFE_CHANNEL][i])) / 3.0f;
+				}
+
+				else // linear region (-1/3..1/3)
+					output[LFE_CHANNEL][i] *= 2.0f;
+			}
+
+			output[LFE_CHANNEL][i] /= 2.0f; // divide all by 2 to compensate for extra 6 dB gain boost
 		}
 	}
 }

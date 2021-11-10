@@ -137,83 +137,50 @@ void processSingleChannel(double* input, double* output, distortion_state_t stat
 
 
 	case SOFT_CLIPPING:
-
 	{
-
 		float threshold1 = 1.0f / 3.0f;
-
 		float threshold2 = 2.0f / 3.0f;
 
 		for (int sample = 0; sample < state.numSamples; ++sample)
-
 		{
-
 			if (output[sample]  > threshold1)
-
 			{
-
 				if (output[sample] > threshold2) // positive clipping
-
 				{
-
 					output[sample] = 1.0f;
-
 				}
 
 				else // soft knee (positive)
-
 				{
-
 					output[sample] = (3.0f - (2.0f - 3.0f*output[sample])*(2.0f - 3.0f*output[sample])) / 3.0f;
-
 				}
-
 			}
 
 			else
-
 			{
-
 				if (output[sample] < -threshold1)
-
 				{
-
 					if (output[sample] < -threshold2) // negative clipping
-
 					{
-
 						output[sample] = -1.0f;
-
 					}
 
 					else // soft knee (negative)
-
 					{
-
 						output[sample] = -(3.0f - (2.0f + 3.0f*output[sample])*(2.0f + 3.0f*output[sample])) / 3.0f;
-
 					}
-
 				}
 
 				else // linear region (-1/3..1/3)
-
 				{
-
 					output[sample] *= 2.0f;
-
 				}
-
 			}
 
-
-
 			output[sample] /= 2.0f; // divide all by 2 to compensate for extra 6 dB gain boost
-
 		}
 
 		break;
-
 	}
 
 
