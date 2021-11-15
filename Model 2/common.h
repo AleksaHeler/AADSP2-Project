@@ -7,8 +7,7 @@
 #include <string.h>
 #include <math.h>
 
-//#include "stdfix_emu.h"
-//#include "fixed_point_math.h"
+#include "stdfix_emu.h"			// Fixed point type emulator
 #include "WAVheader.h"
 
 
