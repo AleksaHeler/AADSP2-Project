@@ -1,8 +1,10 @@
 #include "processing.h"
 
 
-const DSPfract distorsion_threshold_1 = FRACT_NUM(0.33333);		// Original: 1/3
-const DSPfract distorsion_threshold_2 = FRACT_NUM(0.66667);		// Original: 2/3
+const DSPfract distorsion_threshold_1 = fract(0.33333);		// Original: 1/3
+const DSPfract distorsion_threshold_2 = fract(0.6667);		// Original: 2/3
+const DSPfract two_eights = FRACT_NUM(0.25);
+const DSPfract three_eights = FRACT_NUM(0.375);
 
 const DSPfract stage_two_gain = fract(pow(10.0, -2.0 / 20.0));	// -2dB for C and LFE channel
 DSPfract input_L = fract(0);
@@ -69,40 +71,44 @@ void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 			if (LFE_channel_out > distorsion_threshold_1)
 			{
 				if (LFE_channel_out > distorsion_threshold_2) // positive clipping
+				{
 					LFE_channel_out = fract(1.0);
+				}
 
 				else // soft knee (positive)
 				{
-					//TODO: adapt this - all divided by 8
-					/*LFE_channel_out = LFE_channel_out >> 3;
-					LFE_channel_out = (FRACT_NUM(0.375) - (FRACT_NUM(0.25) - FRACT_NUM(0.375) * LFE_channel_out) * (FRACT_NUM(0.25) - FRACT_NUM(0.375) * LFE_channel_out)) / FRACT_NUM(0.375);
-					LFE_channel_out = LFE_channel_out << 3;*/
+					//output[sample] = (3.0f - (2.0f - 3.0f*output[sample])*(2.0f - 3.0f*output[sample])) / 3.0f;
+					DSPfract two = FRACT_NUM(2);
+					DSPfract three = FRACT_NUM(3);
+					LFE_channel_out = (three - (two - three * LFE_channel_out) * (two - three * LFE_channel_out)) / three;
 				}
 			}
 			else
 			{
-				if (LFE_channel_out < (DSPfract)-distorsion_threshold_1)
+				DSPfract temp = distorsion_threshold_1;
+				temp = -temp;
+				if (LFE_channel_out < temp)
 				{
-					// negative clipping
-					if (LFE_channel_out < (DSPfract)-distorsion_threshold_2)
+					DSPfract temp = distorsion_threshold_2;
+					temp = -temp;
+					if (LFE_channel_out < temp) // negative clipping
 					{
 						LFE_channel_out = fract(-1.0);
 					}
 
 					else // soft knee (negative)
 					{
-						//TODO: adapt this
-						/*
-						LFE_channel_out = LFE_channel_out >> 3;
-						LFE_channel_out = -(FRACT_NUM(0.375) - (FRACT_NUM(0.25) + FRACT_NUM(0.375) * LFE_channel_out) * (FRACT_NUM(0.25) + FRACT_NUM(0.375) * LFE_channel_out));
-						LFE_channel_out = LFE_channel_out / FRACT_NUM(0.375);
-						LFE_channel_out = LFE_channel_out << 3;*/
+						//output[sample] = -(3.0f - (2.0f + 3.0f*output[sample])*(2.0f + 3.0f*output[sample])) / 3.0f;
+						DSPfract two = FRACT_NUM(2);
+						DSPfract three = FRACT_NUM(3);
+						LFE_channel_out = (three - (two + three * *p_LFE_channel_out) * (two + three * *p_LFE_channel_out)) / three;
+						LFE_channel_out = -LFE_channel_out;
 					}
 				}
 
 				else // linear region (-1/3..1/3)
 				{
-					LFE_channel_out = temp << 1; // multiply by two
+					LFE_channel_out = LFE_channel_out << 1; // multiply by two
 				}
 			}
 

@@ -61,8 +61,8 @@ void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE])
 				if (*p_LFE_channel_out > distorsion_threshold_2) // positive clipping
 					*p_LFE_channel_out = 1.0f;
 
-				//else // soft knee (positive)
-					//*p_LFE_channel_out = (3.0f - (2.0f - 3.0f * *p_LFE_channel_out) * (2.0f - 3.0f * *p_LFE_channel_out)) / 3.0f;
+				else // soft knee (positive)
+					*p_LFE_channel_out = (3.0f - (2.0f - 3.0f * *p_LFE_channel_out) * (2.0f - 3.0f * *p_LFE_channel_out)) / 3.0f;
 			}
 
 			else
@@ -72,8 +72,8 @@ void processing(double input[][BLOCK_SIZE], double output[][BLOCK_SIZE])
 					if (*p_LFE_channel_out < -distorsion_threshold_2) // negative clipping
 						*p_LFE_channel_out = -1.0f;
 
-					//else // soft knee (negative)
-						//*p_LFE_channel_out = -(3.0f - (2.0f + 3.0f * *p_LFE_channel_out) * (2.0f + 3.0f * *p_LFE_channel_out)) / 3.0f;
+					else // soft knee (negative)
+						*p_LFE_channel_out = -(3.0f - (2.0f + 3.0f * *p_LFE_channel_out) * (2.0f + 3.0f * *p_LFE_channel_out)) / 3.0f;
 				}
 
 				else // linear region (-1/3..1/3)
