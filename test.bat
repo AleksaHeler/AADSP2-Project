@@ -1,3 +1,8 @@
+
+: Parameters
+@set gain=-6
+@set outmode=3
+
 : Delete log files first.
 @del Docs\compare_model0_vs_model1.txt
 @del Docs\compare_model1_vs_model2.txt
@@ -6,17 +11,17 @@
 : Execute Model 0, Model 1 and Model 2
 @cd "Model 0"\Debug
 @echo Running model 0
-@"Model 0.exe" ..\..\Audio\speech_2ch.wav ..\out.wav -6 3
+@"Model 0.exe" ..\..\Audio\speech_2ch.wav ..\out.wav %gain% %outmode%
 @cd ..\..
 
 @cd "Model 1"\Debug
 @echo Running model 1
-@"Model 1.exe" ..\..\Audio\speech_2ch.wav ..\out.wav -6 3
+@"Model 1.exe" ..\..\Audio\speech_2ch.wav ..\out.wav %gain% %outmode%
 @cd ..\..
 
 @cd "Model 2"\Debug
 @echo Running model 2
-@"Model 2.exe" ..\..\Audio\speech_2ch.wav ..\out.wav -6 3
+@"Model 2.exe" ..\..\Audio\speech_2ch.wav ..\out.wav %gain% %outmode%
 @cd ..\..
 
 : cd model_2_3\

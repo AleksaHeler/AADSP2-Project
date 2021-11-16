@@ -145,14 +145,47 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			// TODO: processing
 			processing(sampleBuffer, sampleBuffer, gain, mode);
 
 			for(int j=0; j<BLOCK_SIZE; j++)
 			{
 				for(int k=0; k<outputWAVhdr.fmt.NumChannels; k++)
 				{	
-					sample = sampleBuffer[k][j] * SAMPLE_SCALE ;	// crude, non-rounding 			
+					int channel = 0;
+					switch (mode)
+					{
+					case OM_2_2_0:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = LS_CHANNEL;
+						if (k == 3) channel = RS_CHANNEL;
+						break;
+					case OM_2_2_1:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = LFE_CHANNEL;
+						if (k == 3) channel = LS_CHANNEL;
+						if (k == 4) channel = RS_CHANNEL;
+						break;
+					case OM_3_2_0:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = C_CHANNEL;
+						if (k == 3) channel = LS_CHANNEL;
+						if (k == 4) channel = RS_CHANNEL;
+						break;
+					case OM_3_2_1:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = C_CHANNEL;
+						if (k == 3) channel = LFE_CHANNEL;
+						if (k == 4) channel = LS_CHANNEL;
+						if (k == 5) channel = RS_CHANNEL;
+						break;
+					default:
+						break;
+					}
+					sample = sampleBuffer[channel][j] * SAMPLE_SCALE ;	// crude, non-rounding 			
 					sample = sample >> (32 - inputWAVhdr.fmt.BitsPerSample);
 					fwrite(&sample, outputWAVhdr.fmt.BitsPerSample/8, 1, wav_out);		
 				}

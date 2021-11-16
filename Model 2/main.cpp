@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
 	// Parameters
 	//-------------------------------------------------
-	DSPfract gain_dB = -4;
+	DSPint gain_dB = -4;
 	DSPfract gain = pow(10.0, gain_dB / 20.0);			// Convert dB to floating point
 	DSPint mode = OM_2_2_0;
 	DSPint num_of_channels = 4;
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 	//-------------------------------------------------
 	if (argc >= 4)
 	{
-		gain_dB = strtod(argv[3], NULL);
+		gain_dB = atoi(argv[3]);
 		gain_dB = gain_dB > 0 ? 0 : gain_dB;
 		gain = pow(10.0, gain_dB / 20.0);
 	}
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
 	{
 		DSPint sample;
 		DSPint BytesPerSample = inputWAVhdr.fmt.BitsPerSample/8;
-		const DSPfract SAMPLE_SCALE = -(DSPfract)(1 << 31);		//2^31
+		const double SAMPLE_SCALE = -(double)(1 << 31);		//2^31
 		DSPint iNumSamples = inputWAVhdr.data.SubChunk2Size/(inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample/8);
 		
 		// TODO: when reading file and converting to DSPfract, we have to scale it down, 
@@ -137,8 +137,9 @@ int main(int argc, char* argv[])
 				{	
 					sample = 0; //debug
 					fread(&sample, BytesPerSample, 1, wav_in);
-					sample = sample << (32 - inputWAVhdr.fmt.BitsPerSample); // force signextend
-					sampleBuffer[k][j] = sample / SAMPLE_SCALE;				 // scale sample to 1.0/-1.0 range		
+					sample = sample << (32 - inputWAVhdr.fmt.BitsPerSample);	// force signextend
+					double value = sample / SAMPLE_SCALE;						// scale sample to 1.0/-1.0 range
+					sampleBuffer[k][j] = fract(value);
 				}
 			}
 
@@ -147,8 +148,42 @@ int main(int argc, char* argv[])
 			for(DSPint j=0; j<BLOCK_SIZE; j++)
 			{
 				for(DSPint k=0; k<outputWAVhdr.fmt.NumChannels; k++)
-				{	
-					sample = sampleBuffer[k][j] * SAMPLE_SCALE ;	// crude, non-rounding 			
+				{
+					int channel = 0;
+					switch (mode)
+					{
+					case OM_2_2_0:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = LS_CHANNEL;
+						if (k == 3) channel = RS_CHANNEL;
+						break;
+					case OM_2_2_1:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = LFE_CHANNEL;
+						if (k == 3) channel = LS_CHANNEL;
+						if (k == 4) channel = RS_CHANNEL;
+						break;
+					case OM_3_2_0:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = C_CHANNEL;
+						if (k == 3) channel = LS_CHANNEL;
+						if (k == 4) channel = RS_CHANNEL;
+						break;
+					case OM_3_2_1:
+						if (k == 0) channel = L_CHANNEL;
+						if (k == 1) channel = R_CHANNEL;
+						if (k == 2) channel = C_CHANNEL;
+						if (k == 3) channel = LFE_CHANNEL;
+						if (k == 4) channel = LS_CHANNEL;
+						if (k == 5) channel = RS_CHANNEL;
+						break;
+					default:
+						break;
+					}
+					sample = sampleBuffer[channel][j].toDouble() * SAMPLE_SCALE ;	// crude, non-rounding
 					sample = sample >> (32 - inputWAVhdr.fmt.BitsPerSample);
 					fwrite(&sample, outputWAVhdr.fmt.BitsPerSample/8, 1, wav_out);		
 				}
