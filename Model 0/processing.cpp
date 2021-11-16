@@ -1,8 +1,8 @@
 #include "processing.h"
 
 
-float distorsion_threshold_1 = 1.0f / 3.0f;		// Original: 1/3
-float distorsion_threshold_2 = 2.0f / 3.0f;		// Original: 2/3
+float distorsion_threshold_1 = 0.05f;		// Original: 1.0f / 3.0f;
+float distorsion_threshold_2 = 0.1f;		// Original: 2.0f / 3.0f;
 
 const double stage_two_gain = pow(10.0, -2.0 / 20.0);	// -2dB for C and LFE channel
 

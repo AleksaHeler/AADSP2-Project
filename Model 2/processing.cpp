@@ -1,8 +1,8 @@
 #include "processing.h"
 
 
-const DSPfract distorsion_threshold_1 = fract(0.33333);		// Original: 1/3
-const DSPfract distorsion_threshold_2 = fract(0.6667);		// Original: 2/3
+const DSPfract distorsion_threshold_1 = fract(0.05);	// Original: fract(0.33333);
+const DSPfract distorsion_threshold_2 = fract(0.1);		// Original: fract(0.66667);
 const DSPfract two_eights = FRACT_NUM(0.25);
 const DSPfract three_eights = FRACT_NUM(0.375);
 
@@ -77,7 +77,6 @@ void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 
 				else // soft knee (positive)
 				{
-					//output[sample] = (3.0f - (2.0f - 3.0f*output[sample])*(2.0f - 3.0f*output[sample])) / 3.0f;
 					DSPfract two = FRACT_NUM(2);
 					DSPfract three = FRACT_NUM(3);
 					LFE_channel_out = (three - (two - three * LFE_channel_out) * (two - three * LFE_channel_out)) / three;
@@ -98,10 +97,9 @@ void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 
 					else // soft knee (negative)
 					{
-						//output[sample] = -(3.0f - (2.0f + 3.0f*output[sample])*(2.0f + 3.0f*output[sample])) / 3.0f;
 						DSPfract two = FRACT_NUM(2);
 						DSPfract three = FRACT_NUM(3);
-						LFE_channel_out = (three - (two + three * *p_LFE_channel_out) * (two + three * *p_LFE_channel_out)) / three;
+						LFE_channel_out = (three - (two + three * LFE_channel_out) * (two + three * LFE_channel_out)) / three;
 						LFE_channel_out = -LFE_channel_out;
 					}
 				}
