@@ -1,0 +1,9 @@
+#ifndef PROCESSING_H
+#define PROCESSING_H
+
+
+
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]);
+
+
+#endif // PROCESSING_H

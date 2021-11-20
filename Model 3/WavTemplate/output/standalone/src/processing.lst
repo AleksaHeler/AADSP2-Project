@@ -1,0 +1,121 @@
+1     	 0000					.public _processing
+2     							.code_ovly
+2      >> start of macro: .code_ovly
+1+    									seg_single , "CODE_OVLY", CODE
+1+     >> start of macro: seg_single
+1+    						  .if ( "" != "" ) & defined( ___SegStart_CODE_ )
+2+    						    segment
+3+    						  .else
+4+    						    segment "CODE_OVLY"
+5+    							.if "" != ""
+6+    						___SegStart_CODE_
+7+    							.endif
+8+    						  .endif
+9+    							#RememberSegmentType
+10+    >> end of macro: seg_single
+2+     >> end of macro: .code_ovly
+3     						
+4     						
+5     						
+6     	 0000				_processing:			/* LN: 4 | CYCLE: 0 | RULES: () */ 
+7     	 0000	 BB540007		xmem[i7] = i7			# LN: 4 | 
+8     	 0001	 020F7FFF		i7 += 1			# LN: 4 | 
+9     	 0002	 87750003		i7 = i7 + (0x3)			# LN: 4 | 
+10    	 0003	 94750001		i4 = i7 - (0x1)			# LN: 4 | 
+11    	 0004	 B0540004		xmem[i4] = i0			# LN: 4 | 
+12    	 0005	 90750002		i0 = i7 - (0x2)			# LN: 4 | 
+13    	 0006	 B1540000		xmem[i0] = i1			# LN: 4 | 
+14    	 0007				cline_4_0:			/* LN: 7 | CYCLE: 0 | RULES: () */ 
+15    	 0007	 90750003		i0 = i7 - (0x3)			# LN: 7 | 
+16    	 0008	 00004DC0		a0 = 0			# LN: 7 | 
+17    	 0009	 98540000		xmem[i0] = a0h			# LN: 7 | 
+18    	 000A	 81000033		do (0x10), label_end_92			# LN: 7 | 
+19    	 000B				cline_7_0:			/* LN: 9 | CYCLE: 0 | RULES: () */ 
+20    	 000B				label_begin_92:			/* LN: 7 | CYCLE: 0 | RULES: () */ 
+21    	 000B	 90750002		i0 = i7 - (0x2)			# LN: 9 | 
+22    	 000C	 B0140000		i0 = xmem[i0]			# LN: 9 | 
+23    	 000D	 91750003		i1 = i7 - (0x3)			# LN: 9 | 
+24    	 000E	 88140001		a0 = xmem[i1]			# LN: 9 | 
+25    	 000F	 09707FFF		a1 = i0			# LN: 9 | 
+26    	 0010	 90750001		i0 = i7 - (0x1)			# LN: 9 | 
+27    	 0011	 B0140000		i0 = xmem[i0]			# LN: 9 | 
+28    	 0012	 91750003		i1 = i7 - (0x3)			# LN: 9 | 
+29    	 0013	 1C414480		b0 = xmem[i1]; a0 = a1 + a0			# LN: 9, 9 | 
+30    	 0014	 09707FFF		a1 = i0			# LN: 9 | 
+31    	 0015	 000044A1		a1 = a1 + b0			# LN: 9 | 
+32    	 0016	 99090030		AnyReg(i0, a1h)			# LN: 9 | 
+33    	 0017	 98090031		AnyReg(i1, a0h)			# LN: 9 | 
+34    	 0018	 88140000		a0 = xmem[i0]			# LN: 9 | 
+35    	 0019	 00004E40		a0 = a0 >> 1			# LN: 9 | 
+36    	 001A	 00004E40		a0 = a0 >> 1			# LN: 9 | 
+37    	 001B	 98540001		xmem[i1] = a0h			# LN: 9 | 
+38    	 001C				cline_9_0:			/* LN: 10 | CYCLE: 0 | RULES: () */ 
+39    	 001C	 90750002		i0 = i7 - (0x2)			# LN: 10 | 
+40    	 001D	 B0140000		i0 = xmem[i0]			# LN: 10 | 
+41    	 001E	 91750003		i1 = i7 - (0x3)			# LN: 10 | 
+42    	 001F	 80050010		i0 = i0 + (0x10)			# LN: 10 | 
+43    	 0020	 88140001		a0 = xmem[i1]			# LN: 10 | 
+44    	 0021	 09707FFF		a1 = i0			# LN: 10 | 
+45    	 0022	 90750001		i0 = i7 - (0x1)			# LN: 10 | 
+46    	 0023	 B0140000		i0 = xmem[i0]			# LN: 10 | 
+47    	 0024	 91750003		i1 = i7 - (0x3)			# LN: 10 | 
+48    	 0025	 1C414480		b0 = xmem[i1]; a0 = a1 + a0			# LN: 10, 10 | 
+49    	 0026	 09707FFF		a1 = i0			# LN: 10 | 
+50    	 0027	 000044A1		a1 = a1 + b0			# LN: 10 | 
+51    	 0028	 99090030		AnyReg(i0, a1h)			# LN: 10 | 
+52    	 0029	 98090031		AnyReg(i1, a0h)			# LN: 10 | 
+53    	 002A	 88140000		a0 = xmem[i0]			# LN: 10 | 
+54    	 002B	 00004E40		a0 = a0 >> 1			# LN: 10 | 
+55    	 002C	 00004E40		a0 = a0 >> 1			# LN: 10 | 
+56    	 002D	 98540001		xmem[i1] = a0h			# LN: 10 | 
+57    	 002E				cline_10_0:			/* LN: 7 | CYCLE: 0 | RULES: () */ 
+58    	 002E				init_latch_label_0:			/* LN: 11 | CYCLE: 0 | RULES: () */ 
+59    	 002E	 90750003		i0 = i7 - (0x3)			# LN: 7 | 
+60    	 002F	 88140000		a0 = xmem[i0]			# LN: 7 | 
+61    	 0030	 894A0001		uhalfword(a1) = (0x1)			# LN: 7 | 
+62    	 0031	 00004408		a0 = a0 + a1			# LN: 7 | 
+63    	 0032	 90750003		i0 = i7 - (0x3)			# LN: 7 | 
+64    	 0033				label_end_92:			# LN: 7 | CYCLE: 5 | RULES: ()
+65    	 0033	 98540000		xmem[i0] = a0h			# LN: 7 | 
+66    	 0034				cline_7_1:			/* LN: 12 | CYCLE: 0 | RULES: () */ 
+67    	 0034				for_end_0:			/* LN: 7 | CYCLE: 0 | RULES: () */ 
+68    	 0034	 80080035		jmp (__epilogue_236)			# LN: 12 | 
+69    	 0035				__epilogue_236:			/* LN: 12 | CYCLE: 0 | RULES: () */ 
+70    	 0035	 97750003		i7 = i7 - (0x3)			# LN: 12 | 
+71    	 0036	 02177FFF		i7 -= 1			# LN: 12 | 
+72    	 0037	 81880000		ret			# LN: 12 | 
+73    						(null)
+				 SYMBOL TABLE 
+
+    Name                                                                                    Type                  Value 
+
+_COMMON_INC_PATH_                                                               					 Define                 "C:/CirrusDSP/crystal32/common/inc/"
+_DSP_                                                                           					 Define                 "a"
+_LOCAL_INC_PATH_                                                                					 Define                 "inc/"
+_LOCAL_SRC_PATH_                                                                					 Define                 "src/"
+_MUI_VERSION_                                                                   					 Define                 "020000"
+_OVLY_                                                                          					 Define                 "standalone"
+_OVLY_REVISION_                                                                 					 Define                 "020000"
+_ROUTER_INC_PATH_                                                               					 Define                 "rom_inc/"
+_SLOT_                                                                          					 Define                 "0"
+_TARGET_FAMILY_                                                                 					 Define                 "crystal32"
+_TOOLS_VERSION_                                                                 					 Define                 "0x0701"
+_VERSION_                                                                       					 Define                 "00"
+__CASM_VER__                                                                    			  Unused Variable		        0 (701H)
+__epilogue_236                                                                  			         Relocatable         processing_GEN_0000:0035H
+_processing                                                                     			  Public Relocatable       processing_GEN_0000:0000H
+cline_10_0                                                                      			  Unused Relocatable        processing_GEN_0000:002EH
+cline_4_0                                                                       			  Unused Relocatable        processing_GEN_0000:0007H
+cline_7_0                                                                       			  Unused Relocatable        processing_GEN_0000:000BH
+cline_7_1                                                                       			  Unused Relocatable        processing_GEN_0000:0034H
+cline_9_0                                                                       			  Unused Relocatable        processing_GEN_0000:001CH
+for_end_0                                                                       			  Unused Relocatable        processing_GEN_0000:0034H
+init_latch_label_0                                                              			  Unused Relocatable        processing_GEN_0000:002EH
+label_begin_92                                                                  			  Unused Relocatable        processing_GEN_0000:000BH
+label_end_92                                                                    			         Relocatable         processing_GEN_0000:0033H
+
+	       SEGMENTS:
+
+Size			  Name										 Class
+0000H	 __INIT                                  			 CODE                                    
+0038H	 processing_GEN_0000                     			 CODE_OVLY                               

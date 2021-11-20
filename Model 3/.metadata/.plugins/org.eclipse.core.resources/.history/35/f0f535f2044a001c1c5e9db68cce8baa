@@ -1,0 +1,10 @@
+#include "processing.h"
+
+
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]){
+	for (int i = 0; i < BLOCK_SIZE; i++)
+	{
+		output[L_CHANNEL][i] = input_L_with_gain;
+		output[R_CHANNEL][i] = input_R_with_gain;
+	}
+}

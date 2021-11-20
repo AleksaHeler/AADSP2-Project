@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Overlay_Simulator</name>
+	<comment></comment>
+	<projects>
+		<project>module_code_project</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>dsp.uld.model.dspuldbuilder</name>
+			<arguments>
+				<dictionary>
+					<key>message</key>
+					<value>ERROR: Missing referenced project &quot;PCM_Passthrough_asm&quot;</value>
+				</dictionary>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>clide.debug.core.CLBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>clide.common.basenature</nature>
+		<nature>dsp.uld.model.dspuldnature</nature>
+		<nature>clide.common.CLNature</nature>
+	</natures>
+</projectDescription>

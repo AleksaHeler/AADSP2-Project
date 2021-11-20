@@ -1,0 +1,67 @@
+/*
+ * module_code_project_impl.c
+ *
+ * This file defines the actual implementation of the functions for 
+ * module_code_project.
+ */
+#include <module_code_project_impl.h>
+
+/*
+ * It is a good practice to make MCV shadow. That way host changes
+ * are less likely to produce inconsistent state
+ */
+__memY mcv_t module_code_project_mcv_HOST = MCV_INITIAL_VALUES;
+__memY mcv_t module_code_project_mcv;
+
+void __fg_call module_code_project_preKickstart(__memY void * mif_ptr)
+{
+	// <your code here>
+}
+
+void __fg_call module_code_project_postKickstart(void)
+{
+	// <your code here>
+}
+
+void __fg_call module_code_project_timer(void)
+{
+	// <your code here>
+}
+
+void __fg_call module_code_project_frame(void)
+{
+	// <your code here>
+}
+
+void __fg_call module_code_project_brick(void)
+{
+	/*int i = 0;
+	pcm_sample_ptr_t ptrL = __X_BY_IOBUFFER_PTRS[0];
+	pcm_sample_ptr_t ptrR = __X_BY_IOBUFFER_PTRS[2];
+
+	unsigned fract gain_L = module_code_project_mcv.gain_L; // ili ((mcv_t*)module_code_project_mif.mcv_ptr)->gain_L;
+	unsigned fract gain_R = module_code_project_mcv.gain_R;
+
+	for(i = 0; i < BRICK_SIZE; i++){
+		*ptrL++ = *ptrL * gain_L;
+		*ptrR++ = *ptrR * gain_R;
+	}*/
+}
+
+void __bg_call module_code_project_background(void)
+{
+	// make a shadow copy of the MCV so that changes won't affect this function
+	module_code_project_mcv = module_code_project_mcv_HOST;
+
+	// <your code here>
+}
+
+void __fg_call module_code_project_preMallocInit(void)
+{
+	// <your code here>
+}
+
+void __fg_call module_code_project_postMallocInit(void)
+{
+	// <your code here>
+}

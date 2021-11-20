@@ -1,0 +1,137 @@
+#include "processing.h"
+
+
+const fract distorsion_threshold_1 = 0.05;		// Original: fract(0.33333);
+const fract distorsion_threshold_2 = 0.1;		// Original: fract(0.66667);
+const fract two_eights = 0.25;
+const fract three_eights = 0.375;
+
+const fract stage_two_gain = 0.79432823472;	// -2dB for C and LFE channel
+fract input_L = 0;
+fract input_R = 0;
+fract input_L_with_stage_two_gain = 0;
+fract input_R_with_stage_two_gain = 0;
+
+fract processing_gain = 1;
+int processing_mode = OM_2_2_0;
+
+void initialize_processing(fract gain, int mode)
+{
+	processing_gain = gain;
+	processing_mode = mode;
+}
+
+
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE])
+{
+
+	fract* p_L_channel_in = input[L_CHANNEL];
+	fract* p_R_channel_in = input[R_CHANNEL];
+
+	fract* p_L_channel_out = output[L_CHANNEL];
+	fract* p_R_channel_out = output[R_CHANNEL];
+	fract* p_LS_channel_out = output[LS_CHANNEL];
+	fract* p_RS_channel_out = output[RS_CHANNEL];
+	fract* p_C_channel_out = output[C_CHANNEL];
+	fract* p_LFE_channel_out = output[LFE_CHANNEL];
+
+	fract temp = 0;
+	fract L_channel_out = 0;
+	fract R_channel_out = 0;
+	fract LFE_channel_out = 0;
+	fract out = 0;
+
+	// calculate L and R after gain and apply it to all channels
+	int i;
+	for (i = 0; i < BLOCK_SIZE; i++)
+	{
+		input_L = *p_L_channel_in;
+		input_R = *p_R_channel_in;
+
+		// L, R, LS, RS are always included (LS and RS are inverted)
+		*p_L_channel_out = input_L * processing_gain;
+		*p_LS_channel_out = -*p_L_channel_out;
+		*p_R_channel_out = input_R * processing_gain;
+		*p_RS_channel_out = -*p_R_channel_out;
+
+		// Calculate stage two gain for center channel (-2dB)
+		L_channel_out = *p_L_channel_out;
+		R_channel_out = *p_R_channel_out;
+		input_L_with_stage_two_gain = L_channel_out * stage_two_gain;
+		input_R_with_stage_two_gain = R_channel_out * stage_two_gain;
+
+		// If C channel is included
+		if (processing_mode == OM_3_2_0 || processing_mode == OM_3_2_1)
+		{
+			// Central channel is L+R
+			*p_C_channel_out = input_L_with_stage_two_gain + input_R_with_stage_two_gain;
+		}
+
+		// If LFE is included
+		if (processing_mode == OM_2_2_1 || processing_mode == OM_3_2_1)
+		{
+			LFE_channel_out = input_R_with_stage_two_gain;
+
+			// Apply distorsion to LFE channel signal
+			if (LFE_channel_out > distorsion_threshold_1)
+			{
+				if (LFE_channel_out > distorsion_threshold_2) // positive clipping
+				{
+					LFE_channel_out = 1;
+				}
+
+				else // soft knee (positive)
+				{
+					fract in = LFE_channel_out;
+					fract inSq = in * in;
+					LFE_channel_out = -0.08333333;
+					LFE_channel_out = LFE_channel_out + in;
+					temp = -0.75;
+					temp = temp * inSq;
+					LFE_channel_out = LFE_channel_out + temp;
+					LFE_channel_out = LFE_channel_out << 2;
+				}
+			}
+			else
+			{
+				temp = distorsion_threshold_1;
+				temp = -temp;
+				if (LFE_channel_out < temp)
+				{
+					temp = distorsion_threshold_2;
+					temp = -temp;
+					if (LFE_channel_out < temp) // negative clipping
+					{
+						LFE_channel_out = -1;
+					}
+
+					else // soft knee (negative)
+					{
+						fract in = LFE_channel_out;
+						fract inSq = in * in;
+						LFE_channel_out = 0.08333333;
+						LFE_channel_out = + in + 0.75 * inSq;
+						LFE_channel_out = LFE_channel_out << 2;
+					}
+				}
+
+				else // linear region (-1/3..1/3)
+				{
+					LFE_channel_out = LFE_channel_out << 1; // multiply by two
+				}
+			}
+
+			*p_LFE_channel_out = LFE_channel_out >> 1; // divide all by 2 to compensate for extra 6 dB gain boost
+		}
+
+		// Increment all the I/O pointers
+		p_L_channel_in++;
+		p_R_channel_in++;
+		p_L_channel_out++;
+		p_R_channel_out++;
+		p_C_channel_out++;
+		p_LFE_channel_out++;
+		p_LS_channel_out++;
+		p_RS_channel_out++;
+	} // End of for loop
+}

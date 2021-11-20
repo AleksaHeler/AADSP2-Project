@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ULD xmlns:ns2="v7.0">
+    <SDKVersion>7_1_7</SDKVersion>
+    <CLIDEVersion>7_1_8</CLIDEVersion>
+    <chipFamily>crystal32</chipFamily>
+    <chipTargets/>
+    <designTimeProperties/>
+    <supportedOverlays>
+        <Overlay>
+            <name>a1</name>
+            <supportedMemMaps>
+                <MemMap core="DSP_A" config="cfg0" memoryMap="V01"/>
+            </supportedMemMaps>
+        </Overlay>
+        <Overlay>
+            <name>application</name>
+            <supportedMemMaps>
+                <MemMap core="" config="" memoryMap="V01"/>
+            </supportedMemMaps>
+        </Overlay>
+        <Overlay>
+            <name>application_heap</name>
+            <supportedMemMaps>
+                <MemMap core="" config="" memoryMap="V01"/>
+            </supportedMemMaps>
+        </Overlay>
+        <Overlay>
+            <name>os</name>
+            <supportedMemMaps>
+                <MemMap core="" config="" memoryMap="V01"/>
+            </supportedMemMaps>
+        </Overlay>
+        <Overlay>
+            <name>standalone</name>
+            <supportedMemMaps>
+                <MemMap core="" config="" memoryMap="V00"/>
+            </supportedMemMaps>
+        </Overlay>
+    </supportedOverlays>
+    <modules>
+        <module controlPanelEnabled="true">module_code</module>
+    </modules>
+    <BuildConfigurations/>
+    <IsOdtGenerated>true</IsOdtGenerated>
+</ns2:ULD>

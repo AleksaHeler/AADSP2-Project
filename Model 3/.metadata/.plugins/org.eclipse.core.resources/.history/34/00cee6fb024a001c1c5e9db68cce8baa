@@ -1,0 +1,12 @@
+#ifndef PROCESSING_H
+#define PROCESSING_H
+
+
+#include "common.h"
+
+
+void initialize_processing(fract gain, int mode);
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]);
+
+
+#endif // PROCESSING_H
