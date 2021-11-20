@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
 		
 		// exact file length should be handled correctly...
 		for(DSPint i=0; i<iNumSamples/BLOCK_SIZE; i++)
-		{	
+		{
 			for(DSPint j=0; j<BLOCK_SIZE; j++)
 			{
 				for(DSPint k=0; k<inputWAVhdr.fmt.NumChannels; k++)

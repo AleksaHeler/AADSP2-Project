@@ -77,9 +77,10 @@ void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 
 				else // soft knee (positive)
 				{
-					DSPfract two = FRACT_NUM(2);
-					DSPfract three = FRACT_NUM(3);
-					LFE_channel_out = (three - (two - three * LFE_channel_out) * (two - three * LFE_channel_out)) / three;
+					DSPfract in = LFE_channel_out;
+					DSPfract inSq = in * in;
+					LFE_channel_out = FRACT_NUM(-0.08333333f) + in - FRACT_NUM(0.75f) * inSq;
+					LFE_channel_out = LFE_channel_out << 2;
 				}
 			}
 			else
@@ -97,10 +98,10 @@ void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 
 					else // soft knee (negative)
 					{
-						DSPfract two = FRACT_NUM(2);
-						DSPfract three = FRACT_NUM(3);
-						LFE_channel_out = (three - (two + three * LFE_channel_out) * (two + three * LFE_channel_out)) / three;
-						LFE_channel_out = -LFE_channel_out;
+						DSPfract in = LFE_channel_out;
+						DSPfract inSq = in * in;
+						LFE_channel_out = FRACT_NUM(0.08333333f) + in + FRACT_NUM(0.75f) * inSq;
+						LFE_channel_out = LFE_channel_out << 2;
 					}
 				}
 
