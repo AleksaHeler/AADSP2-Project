@@ -11,7 +11,14 @@
 </clideView>
 </clideViews>
 <perspective id="CLIDE.perspective"/>
-<workbench_editors/>
+<workbench_editors>
+<editor file_path="/WavTemplate/src/main.c"/>
+<editor file_path="/WavTemplate/src/processing.c"/>
+<editor file_path="/WavTemplate/inc/common.h"/>
+<editor file_path="/WavTemplate/inc/stdfix_emu.h"/>
+<editor file_path="/WavTemplate/inc/processing.h"/>
+<editor file_path="/WavTemplate/.suldproj"/>
+</workbench_editors>
 <views/>
 <watchExpressions/>
 <launcherConfiguration/>
