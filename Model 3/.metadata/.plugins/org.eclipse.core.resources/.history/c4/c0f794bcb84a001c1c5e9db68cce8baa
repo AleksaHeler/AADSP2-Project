@@ -1,0 +1,20 @@
+#ifndef PROCESSING_H
+#define PROCESSING_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dsplib\wavefile.h>
+#include <stdfix.h>
+
+
+#include "common.h"
+
+static int mode;
+static fract gain;
+
+void initialize_processing(fract gain, int mode);
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]);
+
+
+#endif // PROCESSING_H

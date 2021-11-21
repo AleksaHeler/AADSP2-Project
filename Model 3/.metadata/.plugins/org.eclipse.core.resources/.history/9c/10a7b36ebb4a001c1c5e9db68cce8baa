@@ -1,0 +1,106 @@
+#include "processing.h"
+
+
+void initialize_processing(fract _gain, int _mode){
+	gain = _gain;
+	mode = _mode;
+}
+
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]){
+	int i;
+
+	fract* p_L_channel_in = input[L_CHANNEL];
+	fract* p_R_channel_in = input[R_CHANNEL];
+
+	fract* p_L_channel_out = output[L_CHANNEL];
+	fract* p_R_channel_out = output[R_CHANNEL];
+	fract* p_LS_channel_out = output[LS_CHANNEL];
+	fract* p_RS_channel_out = output[RS_CHANNEL];
+	fract* p_C_channel_out = output[C_CHANNEL];
+	fract* p_LFE_channel_out = output[LFE_CHANNEL];
+
+	fract input_L;
+	fract input_R;
+	fract input_L_with_stage_two_gain = 0;
+	fract input_R_with_stage_two_gain = 0;
+
+	for (i = 0; i < BLOCK_SIZE; i++)
+	{
+		// Get input values
+		input_L = *p_L_channel_in;
+		input_R = *p_R_channel_in;
+
+		// L, R, LS, RS are always included (LS and RS are inverted)
+		*p_L_channel_out = input_L * gain;
+		*p_LS_channel_out = -*p_L_channel_out;
+		*p_R_channel_out = input_R * gain;
+		*p_RS_channel_out = -*p_R_channel_out;
+
+		// Calculate stage two gain for center channel (-2dB)
+		input_L_with_stage_two_gain = *p_L_channel_out * 0.79432823472r;
+		input_R_with_stage_two_gain = *p_R_channel_out * 0.79432823472r;
+
+		// If C channel is included
+		if (mode == OM_3_2_0 || mode == OM_3_2_1)
+		{
+			// Central channel is L+R
+			*p_C_channel_out = input_L_with_stage_two_gain + input_R_with_stage_two_gain;
+		}
+
+		// If LFE is included
+		if (processing_mode == OM_2_2_1 || processing_mode == OM_3_2_1)
+		{
+			*p_LFE_channel_out = input_R_with_stage_two_gain;
+
+			// Apply distorsion to LFE channel signal
+			if (*p_LFE_channel_out > distorsion_threshold_1)
+			{
+				if (*p_LFE_channel_out > distorsion_threshold_2) // positive clipping
+				{
+					*p_LFE_channel_out = 1;
+				}
+
+				else // soft knee (positive)
+				{
+					*p_LFE_channel_out = FRACT_NUM(-0.08333333f) + *p_LFE_channel_out - FRACT_NUM(0.75f) * (*p_LFE_channel_out * *p_LFE_channel_out);
+					*p_LFE_channel_out = *p_LFE_channel_out << 2;
+				}
+			}
+			else
+			{
+				if (*p_LFE_channel_out < -distorsion_threshold_1)
+				{
+					if (*p_LFE_channel_out < -distorsion_threshold_2) // negative clipping
+					{
+						*p_LFE_channel_out = -1;
+					}
+
+					else // soft knee (negative)
+					{
+						DSPfract in = *p_LFE_channel_out;
+						DSPfract inSq = in * in;
+						*p_LFE_channel_out = FRACT_NUM(0.08333333f) + in + FRACT_NUM(0.75f) * inSq;
+						*p_LFE_channel_out = *p_LFE_channel_out << 2;
+					}
+				}
+
+				else // linear region (-1/3..1/3)
+				{
+					*p_LFE_channel_out = *p_LFE_channel_out << 1; // multiply by two
+				}
+			}
+
+			*p_LFE_channel_out = *p_LFE_channel_out >> 1; // divide all by 2 to compensate for extra 6 dB gain boost
+		}
+
+		// Increment all the I/O pointers
+		p_L_channel_in++;
+		p_R_channel_in++;
+		p_L_channel_out++;
+		p_R_channel_out++;
+		p_C_channel_out++;
+		p_LFE_channel_out++;
+		p_LS_channel_out++;
+		p_RS_channel_out++;
+	}
+}

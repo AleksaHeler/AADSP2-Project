@@ -1,0 +1,20 @@
+#include "processing.h"
+
+
+void initialize_processing(fract gain, int mode){
+
+}
+
+void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]){
+	int i;
+
+	for (i = 0; i < BLOCK_SIZE; i++)
+	{
+		output[L_CHANNEL][i] = input[L_CHANNEL][i] >> 2;
+		output[R_CHANNEL][i] = input[R_CHANNEL][i] >> 2;
+		output[LS_CHANNEL][i] = output[L_CHANNEL][i];
+		output[RS_CHANNEL][i] = output[L_CHANNEL][i];
+		output[LFE_CHANNEL][i] = output[L_CHANNEL][i];
+		output[C_CHANNEL][i] = output[L_CHANNEL][i];
+	}
+}

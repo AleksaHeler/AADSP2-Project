@@ -40,7 +40,7 @@ void processing(DSPfract input[][BLOCK_SIZE], DSPfract output[][BLOCK_SIZE])
 	// calculate L and R after gain and apply it to all channels
 	for (DSPint i = 0; i < BLOCK_SIZE; i++)
 	{
-		input_L = *p_L_channel_in;
+		input_L = *p_L_channel_in;		
 		input_R = *p_R_channel_in;
 
 		// L, R, LS, RS are always included (LS and RS are inverted)

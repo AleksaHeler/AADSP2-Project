@@ -15,4 +15,13 @@
 #define RS_CHANNEL		5		// Back right
 
 
+enum OUTPUT_MODES
+{
+	OM_2_2_0 = 0,			// L, R, LS, RS
+	OM_2_2_1 = 1,			// L, R, LS, RS, LFE
+	OM_3_2_0 = 2,			// L, R, C, LS, RS
+	OM_3_2_1 = 3			// L, R, C, LS, RS, LFE
+};
+
+
 #endif // COMMON_H
