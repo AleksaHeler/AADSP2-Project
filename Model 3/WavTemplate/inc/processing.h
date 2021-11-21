@@ -10,14 +10,14 @@
 
 #include "common.h"
 
-static int mode;
-static fract gain;
+__memX static int mode;
+__memX static fract gain;
 
-static fract distorsion_threshold_1 = 0.05;
-static fract distorsion_threshold_2 = 0.1;
+static __memX fract distorsion_threshold_1 = 0.05;
+static __memX fract distorsion_threshold_2 = 0.1;
 
 void initialize_processing(fract _gain, int _mode);
-void processing(fract input[][BLOCK_SIZE], fract output[][BLOCK_SIZE]);
+void processing(__memX fract input[][BLOCK_SIZE], __memX fract output[][BLOCK_SIZE]);
 
 
 #endif // PROCESSING_H

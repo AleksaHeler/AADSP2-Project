@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<settings built="true" last_build_time="1637493005964">
+<settings built="true" last_build_time="1637520953059">
 	<dependencies>
-		<source_file last_build_time="1637493004401" path="src/main.c">
+		<source_file last_build_time="1637520302252" path="src/main.c">
 			<dependency>../../../../../../../../CirrusDSP/include/stdio.h</dependency>
 			<dependency>../../../../../../../../CirrusDSP/include/stdlib.h</dependency>
 			<dependency>../../../../../../../../CirrusDSP/include/string.h</dependency>
@@ -12,7 +12,7 @@
 			<dependency>../inc/common.h</dependency>
 			<dependency>../inc/processing.h</dependency>
 		</source_file>
-		<source_file last_build_time="1637493003856" path="src/processing.c">
+		<source_file last_build_time="1637520951494" path="src/processing.c">
 			<dependency>../inc/processing.h</dependency>
 			<dependency>../../../../../../../../CirrusDSP/include/stdio.h</dependency>
 			<dependency>../../../../../../../../CirrusDSP/include/stdlib.h</dependency>

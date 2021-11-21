@@ -10,27 +10,26 @@
 #include "processing.h"
 
 
-fract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
+__memX fract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 
+__memX WAVREAD_HANDLE *wav_in;
+__memY WAVWRITE_HANDLE *wav_out;
+
+__memX char WavInputName[256];
+__memY char WavOutputName[256];
+
+__memX int nChannelsIn;
+__memX int nChannelsOut;
+__memX int bitsPerSample;
+__memX int sampleRate;
+__memX int iNumSamples;
+__memX int i;
+__memX fract gain = 0.501187r;
+__memX int mode = OM_3_2_1;
+__memX int channel = 0;
  
 int main(int argc, char *argv[])
- {
-	WAVREAD_HANDLE *wav_in;
-	WAVWRITE_HANDLE *wav_out;
-	
-	char WavInputName[256];
-	char WavOutputName[256];
-
-    int nChannelsIn;
-    int nChannelsOut;
-	int bitsPerSample;
-    int sampleRate;
-    int iNumSamples;
-    int i;
-    fract gain = 0.501187r;
-	int mode = OM_3_2_1;
-	int channel = 0;
-
+{
 	// Init channel buffers
 	for(i=0; i<MAX_NUM_CHANNEL; i++)
 		memset(&sampleBuffer[i],0,BLOCK_SIZE);
