@@ -1,37 +1,40 @@
 1     	 0000					.public _WavInputName
 2     	 0000					.public _WavOutputName
-3     	 0000					.public _bitsPerSample
-4     	 0000					.public _channel
-5     	 0000					.public _gain
-6     	 0000					.public _i
-7     	 0000					.public _iNumSamples
-8     	 0000					.public _mode
-9     	 0000					.public _nChannelsIn
-10    	 0000					.public _nChannelsOut
-11    	 0000					.public _sampleBuffer
-12    	 0000					.public _sampleRate
-13    	 0000					.public _wav_in
-14    	 0000					.public _wav_out
-15    	 0000					.extern _cl_wavread_bits_per_sample
-16    	 0000					.extern _cl_wavread_close
-17    	 0000					.extern _cl_wavread_frame_rate
-18    	 0000					.extern _cl_wavread_getnchannels
-19    	 0000					.extern _cl_wavread_number_of_frames
-20    	 0000					.extern _cl_wavread_open
-21    	 0000					.extern _cl_wavread_recvsample
-22    	 0000					.extern _cl_wavwrite_close
-23    	 0000					.extern _cl_wavwrite_open
-24    	 0000					.extern _cl_wavwrite_sendsample
-25    	 0000					.extern _initialize_processing
-26    	 0000					.public _main
-27    	 0000					.extern _memset
-28    	 0000					.extern _printf
-29    	 0000					.extern _processing
-30    	 0000					.extern _strcpy
-31    	 0000					.extern __div
-32    	 0000					.extern __mod
-33    							.xdata_ovly
-33     >> start of macro: .xdata_ovly
+3     	 0000					.extern ___TIMER0_COUNT
+4     	 0000					.extern ___TIMER1_COUNT
+5     	 0000					.extern ___TIMER1_ENABLE
+6     	 0000					.public _bitsPerSample
+7     	 0000					.public _channel
+8     	 0000					.public _gain
+9     	 0000					.public _i
+10    	 0000					.public _iNumSamples
+11    	 0000					.public _mode
+12    	 0000					.public _nChannelsIn
+13    	 0000					.public _nChannelsOut
+14    	 0000					.public _sampleBuffer
+15    	 0000					.public _sampleRate
+16    	 0000					.public _wav_in
+17    	 0000					.public _wav_out
+18    	 0000					.extern _cl_wavread_bits_per_sample
+19    	 0000					.extern _cl_wavread_close
+20    	 0000					.extern _cl_wavread_frame_rate
+21    	 0000					.extern _cl_wavread_getnchannels
+22    	 0000					.extern _cl_wavread_number_of_frames
+23    	 0000					.extern _cl_wavread_open
+24    	 0000					.extern _cl_wavread_recvsample
+25    	 0000					.extern _cl_wavwrite_close
+26    	 0000					.extern _cl_wavwrite_open
+27    	 0000					.extern _cl_wavwrite_sendsample
+28    	 0000					.extern _initialize_processing
+29    	 0000					.public _main
+30    	 0000					.extern _memset
+31    	 0000					.extern _printf
+32    	 0000					.extern _processing
+33    	 0000					.extern _strcpy
+34    	 0000					.extern __div
+35    	 0000					.extern __mod
+36    							.xdata_ovly
+36     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
 1+     >> start of macro: seg_single
 1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
@@ -45,10 +48,10 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-34    	 0000				_WavInputName
-35    	 0000					.bss (0x100)
-36    							.ydata_ovly
-36     >> start of macro: .ydata_ovly
+37    	 0000				_WavInputName
+38    	 0000					.bss (0x100)
+39    							.ydata_ovly
+39     >> start of macro: .ydata_ovly
 1+    									seg_single , "Y_OVLY", Y
 1+     >> start of macro: seg_single
 1+    						  .if ( "" != "" ) & defined( ___SegStart_Y_ )
@@ -62,25 +65,8 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .ydata_ovly
-37    	 0000				_WavOutputName
-38    	 0000					.bss (0x100)
-39    							.xdata_ovly
-39     >> start of macro: .xdata_ovly
-1+    									seg_single , "X_OVLY", X
-1+     >> start of macro: seg_single
-1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
-2+    						    segment
-3+    						  .else
-4+    						    segment "X_OVLY"
-5+    							.if "" != ""
-6+    						___SegStart_X_
-7+    							.endif
-8+    						  .endif
-9+    							#RememberSegmentType
-10+    >> end of macro: seg_single
-2+     >> end of macro: .xdata_ovly
-40    	 0000				_bitsPerSample
-41    	 0000					.bss (0x1)
+40    	 0000				_WavOutputName
+41    	 0000					.bss (0x100)
 42    							.xdata_ovly
 42     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -96,9 +82,8 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-43    	 0000				_channel
-44    	 0000					.dw  (0x0)
-	 0000	 00000000	 
+43    	 0000				_bitsPerSample
+44    	 0000					.bss (0x1)
 45    							.xdata_ovly
 45     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -114,9 +99,9 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-46    	 0000				_distorsion_threshold_1
-47    	 0000					.dw  (0x6666666)
-	 0000	 06666666	 
+46    	 0000				_channel
+47    	 0000					.dw  (0x0)
+	 0000	 00000000	 
 48    							.xdata_ovly
 48     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -132,9 +117,9 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-49    	 0000				_distorsion_threshold_2
-50    	 0000					.dw  (0xccccccd)
-	 0000	 0CCCCCCD	 
+49    	 0000				_distorsion_threshold_1
+50    	 0000					.dw  (0x6666666)
+	 0000	 06666666	 
 51    							.xdata_ovly
 51     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -150,9 +135,9 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-52    	 0000				_gain
-53    	 0000					.dw  (0x4026e547)
-	 0000	 4026E547	 
+52    	 0000				_distorsion_threshold_2
+53    	 0000					.dw  (0xccccccd)
+	 0000	 0CCCCCCD	 
 54    							.xdata_ovly
 54     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -168,8 +153,9 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-55    	 0000				_i
-56    	 0000					.bss (0x1)
+55    	 0000				_gain
+56    	 0000					.dw  (0x4026e547)
+	 0000	 4026E547	 
 57    							.xdata_ovly
 57     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -185,7 +171,7 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-58    	 0000				_iNumSamples
+58    	 0000				_i
 59    	 0000					.bss (0x1)
 60    							.xdata_ovly
 60     >> start of macro: .xdata_ovly
@@ -202,9 +188,8 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-61    	 0000				_mode
-62    	 0000					.dw  (0x3)
-	 0000	 00000003	 
+61    	 0000				_iNumSamples
+62    	 0000					.bss (0x1)
 63    							.xdata_ovly
 63     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -220,8 +205,9 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-64    	 0000				_nChannelsIn
-65    	 0000					.bss (0x1)
+64    	 0000				_mode
+65    	 0000					.dw  (0x3)
+	 0000	 00000003	 
 66    							.xdata_ovly
 66     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -237,7 +223,7 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-67    	 0000				_nChannelsOut
+67    	 0000				_nChannelsIn
 68    	 0000					.bss (0x1)
 69    							.xdata_ovly
 69     >> start of macro: .xdata_ovly
@@ -254,8 +240,8 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-70    	 0000				_sampleBuffer
-71    	 0000					.bss (0x80)
+70    	 0000				_nChannelsOut
+71    	 0000					.bss (0x1)
 72    							.xdata_ovly
 72     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -271,8 +257,8 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-73    	 0000				_sampleRate
-74    	 0000					.bss (0x1)
+73    	 0000				_sampleBuffer
+74    	 0000					.bss (0x80)
 75    							.xdata_ovly
 75     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -288,75 +274,10 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-76    	 0000				_string_const_0
-77    	 0000					.dw  (0x45)
-	 0000	 00000045	 
-78    	 0001					.dw  (0x72)
-	 0001	 00000072	 
-79    	 0002					.dw  (0x72)
-	 0002	 00000072	 
-80    	 0003					.dw  (0x6f)
-	 0003	 0000006F	 
-81    	 0004					.dw  (0x72)
-	 0004	 00000072	 
-82    	 0005					.dw  (0x3a)
-	 0005	 0000003A	 
-83    	 0006					.dw  (0x20)
-	 0006	 00000020	 
-84    	 0007					.dw  (0x43)
-	 0007	 00000043	 
-85    	 0008					.dw  (0x6f)
-	 0008	 0000006F	 
-86    	 0009					.dw  (0x75)
-	 0009	 00000075	 
-87    	 000A					.dw  (0x6c)
-	 000A	 0000006C	 
-88    	 000B					.dw  (0x64)
-	 000B	 00000064	 
-89    	 000C					.dw  (0x20)
-	 000C	 00000020	 
-90    	 000D					.dw  (0x6e)
-	 000D	 0000006E	 
-91    	 000E					.dw  (0x6f)
-	 000E	 0000006F	 
-92    	 000F					.dw  (0x74)
-	 000F	 00000074	 
-93    	 0010					.dw  (0x20)
-	 0010	 00000020	 
-94    	 0011					.dw  (0x6f)
-	 0011	 0000006F	 
-95    	 0012					.dw  (0x70)
-	 0012	 00000070	 
-96    	 0013					.dw  (0x65)
-	 0013	 00000065	 
-97    	 0014					.dw  (0x6e)
-	 0014	 0000006E	 
-98    	 0015					.dw  (0x20)
-	 0015	 00000020	 
-99    	 0016					.dw  (0x77)
-	 0016	 00000077	 
-100   	 0017					.dw  (0x61)
-	 0017	 00000061	 
-101   	 0018					.dw  (0x76)
-	 0018	 00000076	 
-102   	 0019					.dw  (0x65)
-	 0019	 00000065	 
-103   	 001A					.dw  (0x66)
-	 001A	 00000066	 
-104   	 001B					.dw  (0x69)
-	 001B	 00000069	 
-105   	 001C					.dw  (0x6c)
-	 001C	 0000006C	 
-106   	 001D					.dw  (0x65)
-	 001D	 00000065	 
-107   	 001E					.dw  (0x2e)
-	 001E	 0000002E	 
-108   	 001F					.dw  (0xa)
-	 001F	 0000000A	 
-109   	 0020					.dw  (0x0)
-	 0020	 00000000	 
-110   							.xdata_ovly
-110    >> start of macro: .xdata_ovly
+76    	 0000				_sampleRate
+77    	 0000					.bss (0x1)
+78    							.xdata_ovly
+78     >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
 1+     >> start of macro: seg_single
 1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
@@ -370,75 +291,75 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-111   	 0000				_string_const_1
-112   	 0000					.dw  (0x45)
+79    	 0000				_string_const_0
+80    	 0000					.dw  (0x45)
 	 0000	 00000045	 
-113   	 0001					.dw  (0x72)
+81    	 0001					.dw  (0x72)
 	 0001	 00000072	 
-114   	 0002					.dw  (0x72)
+82    	 0002					.dw  (0x72)
 	 0002	 00000072	 
-115   	 0003					.dw  (0x6f)
+83    	 0003					.dw  (0x6f)
 	 0003	 0000006F	 
-116   	 0004					.dw  (0x72)
+84    	 0004					.dw  (0x72)
 	 0004	 00000072	 
-117   	 0005					.dw  (0x3a)
+85    	 0005					.dw  (0x3a)
 	 0005	 0000003A	 
-118   	 0006					.dw  (0x20)
+86    	 0006					.dw  (0x20)
 	 0006	 00000020	 
-119   	 0007					.dw  (0x43)
+87    	 0007					.dw  (0x43)
 	 0007	 00000043	 
-120   	 0008					.dw  (0x6f)
+88    	 0008					.dw  (0x6f)
 	 0008	 0000006F	 
-121   	 0009					.dw  (0x75)
+89    	 0009					.dw  (0x75)
 	 0009	 00000075	 
-122   	 000A					.dw  (0x6c)
+90    	 000A					.dw  (0x6c)
 	 000A	 0000006C	 
-123   	 000B					.dw  (0x64)
+91    	 000B					.dw  (0x64)
 	 000B	 00000064	 
-124   	 000C					.dw  (0x20)
+92    	 000C					.dw  (0x20)
 	 000C	 00000020	 
-125   	 000D					.dw  (0x6e)
+93    	 000D					.dw  (0x6e)
 	 000D	 0000006E	 
-126   	 000E					.dw  (0x6f)
+94    	 000E					.dw  (0x6f)
 	 000E	 0000006F	 
-127   	 000F					.dw  (0x74)
+95    	 000F					.dw  (0x74)
 	 000F	 00000074	 
-128   	 0010					.dw  (0x20)
+96    	 0010					.dw  (0x20)
 	 0010	 00000020	 
-129   	 0011					.dw  (0x6f)
+97    	 0011					.dw  (0x6f)
 	 0011	 0000006F	 
-130   	 0012					.dw  (0x70)
+98    	 0012					.dw  (0x70)
 	 0012	 00000070	 
-131   	 0013					.dw  (0x65)
+99    	 0013					.dw  (0x65)
 	 0013	 00000065	 
-132   	 0014					.dw  (0x6e)
+100   	 0014					.dw  (0x6e)
 	 0014	 0000006E	 
-133   	 0015					.dw  (0x20)
+101   	 0015					.dw  (0x20)
 	 0015	 00000020	 
-134   	 0016					.dw  (0x77)
+102   	 0016					.dw  (0x77)
 	 0016	 00000077	 
-135   	 0017					.dw  (0x61)
+103   	 0017					.dw  (0x61)
 	 0017	 00000061	 
-136   	 0018					.dw  (0x76)
+104   	 0018					.dw  (0x76)
 	 0018	 00000076	 
-137   	 0019					.dw  (0x65)
+105   	 0019					.dw  (0x65)
 	 0019	 00000065	 
-138   	 001A					.dw  (0x66)
+106   	 001A					.dw  (0x66)
 	 001A	 00000066	 
-139   	 001B					.dw  (0x69)
+107   	 001B					.dw  (0x69)
 	 001B	 00000069	 
-140   	 001C					.dw  (0x6c)
+108   	 001C					.dw  (0x6c)
 	 001C	 0000006C	 
-141   	 001D					.dw  (0x65)
+109   	 001D					.dw  (0x65)
 	 001D	 00000065	 
-142   	 001E					.dw  (0x2e)
+110   	 001E					.dw  (0x2e)
 	 001E	 0000002E	 
-143   	 001F					.dw  (0xa)
+111   	 001F					.dw  (0xa)
 	 001F	 0000000A	 
-144   	 0020					.dw  (0x0)
+112   	 0020					.dw  (0x0)
 	 0020	 00000000	 
-145   							.xdata_ovly
-145    >> start of macro: .xdata_ovly
+113   							.xdata_ovly
+113    >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
 1+     >> start of macro: seg_single
 1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
@@ -452,64 +373,129 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-146   	 0000				_string_const_2
-147   	 0000					.dw  (0x25)
+114   	 0000				_string_const_1
+115   	 0000					.dw  (0x45)
+	 0000	 00000045	 
+116   	 0001					.dw  (0x72)
+	 0001	 00000072	 
+117   	 0002					.dw  (0x72)
+	 0002	 00000072	 
+118   	 0003					.dw  (0x6f)
+	 0003	 0000006F	 
+119   	 0004					.dw  (0x72)
+	 0004	 00000072	 
+120   	 0005					.dw  (0x3a)
+	 0005	 0000003A	 
+121   	 0006					.dw  (0x20)
+	 0006	 00000020	 
+122   	 0007					.dw  (0x43)
+	 0007	 00000043	 
+123   	 0008					.dw  (0x6f)
+	 0008	 0000006F	 
+124   	 0009					.dw  (0x75)
+	 0009	 00000075	 
+125   	 000A					.dw  (0x6c)
+	 000A	 0000006C	 
+126   	 000B					.dw  (0x64)
+	 000B	 00000064	 
+127   	 000C					.dw  (0x20)
+	 000C	 00000020	 
+128   	 000D					.dw  (0x6e)
+	 000D	 0000006E	 
+129   	 000E					.dw  (0x6f)
+	 000E	 0000006F	 
+130   	 000F					.dw  (0x74)
+	 000F	 00000074	 
+131   	 0010					.dw  (0x20)
+	 0010	 00000020	 
+132   	 0011					.dw  (0x6f)
+	 0011	 0000006F	 
+133   	 0012					.dw  (0x70)
+	 0012	 00000070	 
+134   	 0013					.dw  (0x65)
+	 0013	 00000065	 
+135   	 0014					.dw  (0x6e)
+	 0014	 0000006E	 
+136   	 0015					.dw  (0x20)
+	 0015	 00000020	 
+137   	 0016					.dw  (0x77)
+	 0016	 00000077	 
+138   	 0017					.dw  (0x61)
+	 0017	 00000061	 
+139   	 0018					.dw  (0x76)
+	 0018	 00000076	 
+140   	 0019					.dw  (0x65)
+	 0019	 00000065	 
+141   	 001A					.dw  (0x66)
+	 001A	 00000066	 
+142   	 001B					.dw  (0x69)
+	 001B	 00000069	 
+143   	 001C					.dw  (0x6c)
+	 001C	 0000006C	 
+144   	 001D					.dw  (0x65)
+	 001D	 00000065	 
+145   	 001E					.dw  (0x2e)
+	 001E	 0000002E	 
+146   	 001F					.dw  (0xa)
+	 001F	 0000000A	 
+147   	 0020					.dw  (0x0)
+	 0020	 00000000	 
+148   							.xdata_ovly
+148    >> start of macro: .xdata_ovly
+1+    									seg_single , "X_OVLY", X
+1+     >> start of macro: seg_single
+1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
+2+    						    segment
+3+    						  .else
+4+    						    segment "X_OVLY"
+5+    							.if "" != ""
+6+    						___SegStart_X_
+7+    							.endif
+8+    						  .endif
+9+    							#RememberSegmentType
+10+    >> end of macro: seg_single
+2+     >> end of macro: .xdata_ovly
+149   	 0000				_string_const_2
+150   	 0000					.dw  (0x25)
 	 0000	 00000025	 
-148   	 0001					.dw  (0x64)
+151   	 0001					.dw  (0x64)
 	 0001	 00000064	 
-149   	 0002					.dw  (0x20)
+152   	 0002					.dw  (0x20)
 	 0002	 00000020	 
-150   	 0003					.dw  (0x2f)
+153   	 0003					.dw  (0x2f)
 	 0003	 0000002F	 
-151   	 0004					.dw  (0x20)
+154   	 0004					.dw  (0x20)
 	 0004	 00000020	 
-152   	 0005					.dw  (0x25)
+155   	 0005					.dw  (0x25)
 	 0005	 00000025	 
-153   	 0006					.dw  (0x64)
+156   	 0006					.dw  (0x64)
 	 0006	 00000064	 
-154   	 0007					.dw  (0x20)
+157   	 0007					.dw  (0x20)
 	 0007	 00000020	 
-155   	 0008					.dw  (0x69)
+158   	 0008					.dw  (0x69)
 	 0008	 00000069	 
-156   	 0009					.dw  (0x74)
+159   	 0009					.dw  (0x74)
 	 0009	 00000074	 
-157   	 000A					.dw  (0x65)
+160   	 000A					.dw  (0x65)
 	 000A	 00000065	 
-158   	 000B					.dw  (0x72)
+161   	 000B					.dw  (0x72)
 	 000B	 00000072	 
-159   	 000C					.dw  (0x61)
+162   	 000C					.dw  (0x61)
 	 000C	 00000061	 
-160   	 000D					.dw  (0x74)
+163   	 000D					.dw  (0x74)
 	 000D	 00000074	 
-161   	 000E					.dw  (0x69)
+164   	 000E					.dw  (0x69)
 	 000E	 00000069	 
-162   	 000F					.dw  (0x6f)
+165   	 000F					.dw  (0x6f)
 	 000F	 0000006F	 
-163   	 0010					.dw  (0x6e)
+166   	 0010					.dw  (0x6e)
 	 0010	 0000006E	 
-164   	 0011					.dw  (0x73)
+167   	 0011					.dw  (0x73)
 	 0011	 00000073	 
-165   	 0012					.dw  (0xa)
+168   	 0012					.dw  (0xa)
 	 0012	 0000000A	 
-166   	 0013					.dw  (0x0)
+169   	 0013					.dw  (0x0)
 	 0013	 00000000	 
-167   							.xdata_ovly
-167    >> start of macro: .xdata_ovly
-1+    									seg_single , "X_OVLY", X
-1+     >> start of macro: seg_single
-1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
-2+    						    segment
-3+    						  .else
-4+    						    segment "X_OVLY"
-5+    							.if "" != ""
-6+    						___SegStart_X_
-7+    							.endif
-8+    						  .endif
-9+    							#RememberSegmentType
-10+    >> end of macro: seg_single
-2+     >> end of macro: .xdata_ovly
-168   	 0000				_wav_in
-169   	 0000					.bss (0x1)
 170   							.xdata_ovly
 170    >> start of macro: .xdata_ovly
 1+    									seg_single , "X_OVLY", X
@@ -525,10 +511,27 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .xdata_ovly
-171   	 0000				_wav_out
+171   	 0000				_wav_in
 172   	 0000					.bss (0x1)
-173   							.code_ovly
-173    >> start of macro: .code_ovly
+173   							.xdata_ovly
+173    >> start of macro: .xdata_ovly
+1+    									seg_single , "X_OVLY", X
+1+     >> start of macro: seg_single
+1+    						  .if ( "" != "" ) & defined( ___SegStart_X_ )
+2+    						    segment
+3+    						  .else
+4+    						    segment "X_OVLY"
+5+    							.if "" != ""
+6+    						___SegStart_X_
+7+    							.endif
+8+    						  .endif
+9+    							#RememberSegmentType
+10+    >> end of macro: seg_single
+2+     >> end of macro: .xdata_ovly
+174   	 0000				_wav_out
+175   	 0000					.bss (0x1)
+176   							.code_ovly
+176    >> start of macro: .code_ovly
 1+    									seg_single , "CODE_OVLY", CODE
 1+     >> start of macro: seg_single
 1+    						  .if ( "" != "" ) & defined( ___SegStart_CODE_ )
@@ -542,602 +545,602 @@
 9+    							#RememberSegmentType
 10+    >> end of macro: seg_single
 2+     >> end of macro: .code_ovly
-174   						
-175   						
-176   						
-177   							# This construction should ensure linking of crt0 in case when target is a standalone program without the OS
-178   							.if defined(_OVLY_)
-179   								.if .strcmp('standalone',_OVLY_)=0
-180   								.if .strcmp('crystal32',_TARGET_FAMILY_)=0
-181   	 0000							.extern __start         # dummy use of __start to force linkage of crt0
-182   	 0000				dummy		.equ(__start)
-183   								.else
-184   									.extern __intvec         # dummy use of __intvec to force linkage of intvec
-185   						dummy		.equ(__intvec)
-186   								.endif
-187   								.endif
-188   							.endif
-189   						
-190   	 0000				_main:			/* LN: 31 | CYCLE: 0 | RULES: () */ 
-191   	 0000	 BB540007		xmem[i7] = i7			# LN: 31 | 
-192   	 0001	 020F7FFF		i7 += 1			# LN: 31 | 
-193   	 0002	 B2540017		xmem[i7] = i2; i7 += 1			# LN: 31, 31 | 
-194   	 0003	 87750006		i7 = i7 + (0x6)			# LN: 31 | 
-195   	 0004	 91750001		i1 = i7 - (0x1)			# LN: 31 | 
-196   	 0005	 98540001		xmem[i1] = a0h			# LN: 31 | 
-197   	 0006	 91750002		i1 = i7 - (0x2)			# LN: 31 | 
-198   	 0007	 B0540001		xmem[i1] = i0			# LN: 31 | 
-199   	 0008				cline_31_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
-200   	 0008	 00004DC0		a0 = 0			# LN: 34 | 
-201   	 0009	 98440000		xmem[_i + 0] = a0h			# LN: 34 | 
-202   	 000A				for_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
-203   	 000A	 88040000		a0 = xmem[_i + 0]			# LN: 34 | 
-204   	 000B	 894A0008		uhalfword(a1) = (0x8)			# LN: 34 | 
-205   	 000C	 00004F08		a0 - a1			# LN: 34 | 
-206   	 000D	 84C80019		if (a >= 0) jmp (for_end_0)			# LN: 34 | 
-207   	 000E				cline_34_0:			/* LN: 35 | CYCLE: 0 | RULES: () */ 
-208   	 000E	 88040000		a0 = xmem[_i + 0]			# LN: 35 | 
-209   	 000F	 00004EC0		a0 = a0 << 4			# LN: 35 | 
-210   	 0010	 48704DC0		i0 = a0; a0 = 0			# LN: 35, 35 | 
-211   	 0011	 894A0010		uhalfword(a1) = (0x10)			# LN: 35 | 
-212   	 0012	 80050000		i0 = i0 + (_sampleBuffer + 0)			# LN: 35 | 
-213   	 0013	 80880000		call (_memset)			# LN: 35 | 
-214   	 0014				cline_35_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
-215   	 0014				init_latch_label_0:			/* LN: 35 | CYCLE: 0 | RULES: () */ 
-216   	 0014	 88040000		a0 = xmem[_i + 0]			# LN: 34 | 
-217   	 0015	 894A0001		uhalfword(a1) = (0x1)			# LN: 34 | 
-218   	 0016	 00004408		a0 = a0 + a1			# LN: 34 | 
-219   	 0017	 98440000		xmem[_i + 0] = a0h			# LN: 34 | 
-220   	 0018	 8008000A		jmp (for_0)			# LN: 34 | 
-221   	 0019				cline_34_1:			/* LN: 40 | CYCLE: 0 | RULES: () */ 
-222   	 0019				for_end_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
-223   	 0019	 90750002		i0 = i7 - (0x2)			# LN: 40 | 
-224   	 001A	 B0140000		i0 = xmem[i0]			# LN: 40 | 
-225   	 001B	 A1050000		i1 = (0) + (_WavInputName)			# LN: 40 | 
-226   	 001C	 B8140000		i4 = xmem[i0]			# LN: 40 | 
-227   	 001D	 B1090030		i0 = i1			# LN: 40 | 
-228   	 001E	 B8090031		i1 = i4			# LN: 40 | 
-229   	 001F	 80880000		call (_strcpy)			# LN: 40 | 
-230   	 0020				cline_40_0:			/* LN: 41 | CYCLE: 0 | RULES: () */ 
-231   	 0020	 A0050000		i0 = (0) + (_WavInputName)			# LN: 41 | 
-232   	 0021	 80880000		call (_cl_wavread_open)			# LN: 41 | 
-233   	 0022	 98090030		AnyReg(i0, a0h)			# LN: 41 | 
-234   	 0023	 B0440000		xmem[_wav_in + 0] = i0			# LN: 41 | 
-235   	 0024				cline_41_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
-236   	 0024	 88040000		a0 = xmem[_wav_in + 0]			# LN: 42 | 
-237   	 0025	 00004E80		a0 & a0			# LN: 42 | 
-238   	 0026	 8448002B		if (a != 0) jmp (else_0)			# LN: 42 | 
-239   	 0027				cline_42_0:			/* LN: 44 | CYCLE: 0 | RULES: () */ 
-240   	 0027	 A0050000		i0 = (0) + (_string_const_0)			# LN: 44 | 
-241   	 0028	 80880000		call (_printf)			# LN: 44 | 
-242   	 0029				cline_44_0:			/* LN: 45 | CYCLE: 0 | RULES: () */ 
-243   	 0029	 886AFFFF		halfword(a0) = (0xffff)			# LN: 45 | 
-244   	 002A	 800801A0		jmp (__epilogue_240)			# LN: 45 | 
-245   	 002B				cline_45_0:			/* LN: 52 | CYCLE: 0 | RULES: () */ 
-246   	 002B				endif_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
-247   	 002B				else_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
-248   	 002B	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 52 | 
-249   	 002C	 80880000		call (_cl_wavread_getnchannels)			# LN: 52 | 
-250   	 002D	 98440000		xmem[_nChannelsIn + 0] = a0h			# LN: 52 | 
-251   	 002E				cline_52_0:			/* LN: 53 | CYCLE: 0 | RULES: () */ 
-252   	 002E	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 53 | 
-253   	 002F	 80880000		call (_cl_wavread_bits_per_sample)			# LN: 53 | 
-254   	 0030	 98440000		xmem[_bitsPerSample + 0] = a0h			# LN: 53 | 
-255   	 0031				cline_53_0:			/* LN: 54 | CYCLE: 0 | RULES: () */ 
-256   	 0031	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 54 | 
-257   	 0032	 80880000		call (_cl_wavread_frame_rate)			# LN: 54 | 
-258   	 0033	 98440000		xmem[_sampleRate + 0] = a0h			# LN: 54 | 
-259   	 0034				cline_54_0:			/* LN: 55 | CYCLE: 0 | RULES: () */ 
-260   	 0034	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 55 | 
-261   	 0035	 80880000		call (_cl_wavread_number_of_frames)			# LN: 55 | 
-262   	 0036	 98440000		xmem[_iNumSamples + 0] = a0h			# LN: 55 | 
-263   	 0037				cline_55_0:			/* LN: 61 | CYCLE: 0 | RULES: () */ 
-264   	 0037	 88040000		a0 = xmem[_gain + 0]			# LN: 61 | 
-265   	 0038	 89040000		a1 = xmem[_mode + 0]			# LN: 61 | 
-266   	 0039	 80880000		call (_initialize_processing)			# LN: 61 | 
-267   	 003A				cline_61_0:			/* LN: 62 | CYCLE: 0 | RULES: () */ 
-268   	 003A				switch_0:			/* LN: 62 | CYCLE: 0 | RULES: () */ 
-269   	 003A	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
-270   	 003B	 00004E80		a0 & a0			# LN: 62 | 
-271   	 003C	 8408004A		if (a == 0) jmp (case_0)			# LN: 62 | 
-272   	 003D	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
-273   	 003E	 894A0001		uhalfword(a1) = (0x1)			# LN: 62 | 
-274   	 003F	 00004F08		a0 - a1			# LN: 62 | 
-275   	 0040	 8408004D		if (a == 0) jmp (case_1)			# LN: 62 | 
-276   	 0041	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
-277   	 0042	 894A0002		uhalfword(a1) = (0x2)			# LN: 62 | 
-278   	 0043	 00004F08		a0 - a1			# LN: 62 | 
-279   	 0044	 84080050		if (a == 0) jmp (case_2)			# LN: 62 | 
-280   	 0045	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
-281   	 0046	 894A0003		uhalfword(a1) = (0x3)			# LN: 62 | 
-282   	 0047	 00004F08		a0 - a1			# LN: 62 | 
-283   	 0048	 84080053		if (a == 0) jmp (case_3)			# LN: 62 | 
-284   	 0049	 80080056		jmp (default_0)			# LN: 62 | 
-285   	 004A				cline_62_0:			/* LN: 64 | CYCLE: 0 | RULES: () */ 
-286   	 004A				case_0:			/* LN: 63 | CYCLE: 0 | RULES: () */ 
-287   	 004A	 884A0004		uhalfword(a0) = (0x4)			# LN: 64 | 
-288   	 004B	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 64 | 
-289   	 004C				cline_64_0:			/* LN: 65 | CYCLE: 0 | RULES: () */ 
-290   	 004C	 80080059		jmp (switch_end_0)			# LN: 65 | 
-291   	 004D				cline_65_0:			/* LN: 67 | CYCLE: 0 | RULES: () */ 
-292   	 004D				case_1:			/* LN: 66 | CYCLE: 0 | RULES: () */ 
-293   	 004D	 884A0005		uhalfword(a0) = (0x5)			# LN: 67 | 
-294   	 004E	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 67 | 
-295   	 004F				cline_67_0:			/* LN: 68 | CYCLE: 0 | RULES: () */ 
-296   	 004F	 80080059		jmp (switch_end_0)			# LN: 68 | 
-297   	 0050				cline_68_0:			/* LN: 70 | CYCLE: 0 | RULES: () */ 
-298   	 0050				case_2:			/* LN: 69 | CYCLE: 0 | RULES: () */ 
-299   	 0050	 884A0005		uhalfword(a0) = (0x5)			# LN: 70 | 
-300   	 0051	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 70 | 
-301   	 0052				cline_70_0:			/* LN: 71 | CYCLE: 0 | RULES: () */ 
-302   	 0052	 80080059		jmp (switch_end_0)			# LN: 71 | 
-303   	 0053				cline_71_0:			/* LN: 73 | CYCLE: 0 | RULES: () */ 
-304   	 0053				case_3:			/* LN: 72 | CYCLE: 0 | RULES: () */ 
-305   	 0053	 884A0006		uhalfword(a0) = (0x6)			# LN: 73 | 
-306   	 0054	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 73 | 
-307   	 0055				cline_73_0:			/* LN: 74 | CYCLE: 0 | RULES: () */ 
-308   	 0055	 80080059		jmp (switch_end_0)			# LN: 74 | 
-309   	 0056				cline_74_0:			/* LN: 76 | CYCLE: 0 | RULES: () */ 
-310   	 0056				default_0:			/* LN: 75 | CYCLE: 0 | RULES: () */ 
-311   	 0056	 884A0002		uhalfword(a0) = (0x2)			# LN: 76 | 
-312   	 0057	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 76 | 
-313   	 0058				cline_76_0:			/* LN: 77 | CYCLE: 0 | RULES: () */ 
-314   	 0058	 80080059		jmp (switch_end_0)			# LN: 77 | 
-315   	 0059				cline_77_0:			/* LN: 84 | CYCLE: 0 | RULES: () */ 
-316   	 0059				switch_end_0:			/* LN: 62 | CYCLE: 0 | RULES: () */ 
-317   	 0059	 90750002		i0 = i7 - (0x2)			# LN: 84 | 
-318   	 005A	 B0140000		i0 = xmem[i0]			# LN: 84 | 
-319   	 005B	 A1050000		i1 = (0) + (_WavOutputName)			# LN: 84 | 
-320   	 005C	 02087FFF		i0 += 1			# LN: 84 | 
-321   	 005D	 B8140000		i4 = xmem[i0]			# LN: 84 | 
-322   	 005E	 B1090030		i0 = i1			# LN: 84 | 
-323   	 005F	 B8090031		i1 = i4			# LN: 84 | 
-324   	 0060	 80880000		call (_strcpy)			# LN: 84 | 
-325   	 0061				cline_84_0:			/* LN: 85 | CYCLE: 0 | RULES: () */ 
-326   	 0061	 A0050000		i0 = (0) + (_WavOutputName)			# LN: 85 | 
-327   	 0062	 88040000		a0 = xmem[_bitsPerSample + 0]			# LN: 85 | 
-328   	 0063	 89040000		a1 = xmem[_nChannelsOut + 0]			# LN: 85 | 
-329   	 0064	 8C040000		b0 = xmem[_sampleRate + 0]			# LN: 85 | 
-330   	 0065	 80880000		call (_cl_wavwrite_open)			# LN: 85 | 
-331   	 0066	 98090030		AnyReg(i0, a0h)			# LN: 85 | 
-332   	 0067	 B0440000		xmem[_wav_out + 0] = i0			# LN: 85 | 
-333   	 0068				cline_85_0:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
-334   	 0068	 88040000		a0 = xmem[_wav_out + 0]			# LN: 86 | 
-335   	 0069	 00004E80		a0 & a0			# LN: 86 | 
-336   	 006A	 8448006F		if (a != 0) jmp (else_1)			# LN: 86 | 
-337   	 006B				cline_86_0:			/* LN: 88 | CYCLE: 0 | RULES: () */ 
-338   	 006B	 A0050000		i0 = (0) + (_string_const_1)			# LN: 88 | 
-339   	 006C	 80880000		call (_printf)			# LN: 88 | 
-340   	 006D				cline_88_0:			/* LN: 89 | CYCLE: 0 | RULES: () */ 
-341   	 006D	 886AFFFF		halfword(a0) = (0xffff)			# LN: 89 | 
-342   	 006E	 800801A0		jmp (__epilogue_240)			# LN: 89 | 
-343   	 006F				cline_89_0:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
-344   	 006F				endif_1:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
-345   	 006F				else_1:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
-346   	 006F	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
-347   	 0070	 00004DC0		a0 = 0			# LN: 102 | 
-348   	 0071	 98540000		xmem[i0] = a0h			# LN: 102 | 
-349   	 0072				for_1:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
-350   	 0072	 88040000		a0 = xmem[_iNumSamples + 0]			# LN: 102 | 
-351   	 0073	 894A0010		uhalfword(a1) = (0x10)			# LN: 102 | 
-352   	 0074	 80880000		call (__div)			# LN: 102 | 
-353   	 0075	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
-354   	 0076	 89140000		a1 = xmem[i0]			# LN: 102 | 
-355   	 0077	 00004F01		a1 - a0			# LN: 102 | 
-356   	 0078	 84C80199		if (a >= 0) jmp (for_end_1)			# LN: 102 | 
-357   	 0079				cline_102_0:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
-358   	 0079	 90750004		i0 = i7 - (0x4)			# LN: 104 | 
-359   	 007A	 00004DC0		a0 = 0			# LN: 104 | 
-360   	 007B	 98540000		xmem[i0] = a0h			# LN: 104 | 
-361   	 007C	 810000A2		do (0x10), label_end_92			# LN: 104 | 
-362   	 007D				cline_104_0:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
-363   	 007D				label_begin_92:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
-364   	 007D	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
-365   	 007E	 00004DC0		a0 = 0			# LN: 106 | 
-366   	 007F	 98540000		xmem[i0] = a0h			# LN: 106 | 
-367   	 0080				for_3:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
-368   	 0080	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
-369   	 0081	 88140000		a0 = xmem[i0]			# LN: 106 | 
-370   	 0082	 89040000		a1 = xmem[_nChannelsIn + 0]			# LN: 106 | 
-371   	 0083	 00004F08		a0 - a1			# LN: 106 | 
-372   	 0084	 84C8009D		if (a >= 0) jmp (for_end_3)			# LN: 106 | 
-373   	 0085				cline_106_0:			/* LN: 108 | CYCLE: 0 | RULES: () */ 
-374   	 0085	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 108 | 
-375   	 0086	 80880000		call (_cl_wavread_recvsample)			# LN: 108 | 
-376   	 0087	 90750006		i0 = i7 - (0x6)			# LN: 108 | 
-377   	 0088	 98540000		xmem[i0] = a0h			# LN: 108 | 
-378   	 0089				cline_108_0:			/* LN: 109 | CYCLE: 0 | RULES: () */ 
-379   	 0089	 90750005		i0 = i7 - (0x5)			# LN: 109 | 
-380   	 008A	 88140000		a0 = xmem[i0]			# LN: 109 | 
-381   	 008B	 00004EC0		a0 = a0 << 4			# LN: 109 | 
-382   	 008C	 48707FFF		i0 = a0			# LN: 109 | 
-383   	 008D	 91750004		i1 = i7 - (0x4)			# LN: 109 | 
-384   	 008E	 80050000		i0 = i0 + (_sampleBuffer + 0)			# LN: 109 | 
-385   	 008F	 88140001		a0 = xmem[i1]			# LN: 109 | 
-386   	 0090	 09707FFF		a1 = i0			# LN: 109 | 
-387   	 0091	 00004480		a0 = a1 + a0			# LN: 109 | 
-388   	 0092	 98090030		AnyReg(i0, a0h)			# LN: 109 | 
-389   	 0093	 91750006		i1 = i7 - (0x6)			# LN: 109 | 
-390   	 0094	 88140001		a0 = xmem[i1]			# LN: 109 | 
-391   	 0095	 98540000		xmem[i0] = a0h			# LN: 109 | 
-392   	 0096				cline_109_0:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
-393   	 0096				init_latch_label_1:			/* LN: 110 | CYCLE: 0 | RULES: () */ 
-394   	 0096	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
-395   	 0097	 88140000		a0 = xmem[i0]			# LN: 106 | 
-396   	 0098	 894A0001		uhalfword(a1) = (0x1)			# LN: 106 | 
-397   	 0099	 00004408		a0 = a0 + a1			# LN: 106 | 
-398   	 009A	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
-399   	 009B	 98540000		xmem[i0] = a0h			# LN: 106 | 
-400   	 009C	 80080080		jmp (for_3)			# LN: 106 | 
-401   	 009D				cline_106_1:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
-402   	 009D				init_latch_label_2:			/* LN: 111 | CYCLE: 0 | RULES: () */ 
-403   	 009D				for_end_3:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
-404   	 009D	 90750004		i0 = i7 - (0x4)			# LN: 104 | 
-405   	 009E	 88140000		a0 = xmem[i0]			# LN: 104 | 
-406   	 009F	 894A0001		uhalfword(a1) = (0x1)			# LN: 104 | 
-407   	 00A0	 00004408		a0 = a0 + a1			# LN: 104 | 
-408   	 00A1	 90750004		i0 = i7 - (0x4)			# LN: 104 | 
-409   	 00A2				label_end_92:			# LN: 104 | CYCLE: 5 | RULES: ()
-410   	 00A2	 98540000		xmem[i0] = a0h			# LN: 104 | 
-411   	 00A3				cline_104_1:			/* LN: 113 | CYCLE: 0 | RULES: () */ 
-412   	 00A3				for_end_2:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
-413   	 00A3	 A0050000		i0 = (0) + (_sampleBuffer)			# LN: 113 | 
-414   	 00A4	 A1050000		i1 = (0) + (_sampleBuffer)			# LN: 113 | 
-415   	 00A5	 80880000		call (_processing)			# LN: 113 | 
-416   	 00A6				cline_113_0:			/* LN: 115 | CYCLE: 0 | RULES: () */ 
-417   	 00A6	 90750003		i0 = i7 - (0x3)			# LN: 115 | 
-418   	 00A7	 88140000		a0 = xmem[i0]			# LN: 115 | 
-419   	 00A8	 894A01F4		uhalfword(a1) = (0x1f4)			# LN: 115 | 
-420   	 00A9	 80880000		call (__mod)			# LN: 115 | 
-421   	 00AA	 00004E80		a0 & a0			# LN: 115 | 
-422   	 00AB	 844800B5		if (a != 0) jmp (else_2)			# LN: 115 | 
-423   	 00AC				cline_115_0:			/* LN: 116 | CYCLE: 0 | RULES: () */ 
-424   	 00AC	 88040000		a0 = xmem[_iNumSamples + 0]			# LN: 116 | 
-425   	 00AD	 894A0010		uhalfword(a1) = (0x10)			# LN: 116 | 
-426   	 00AE	 A2050000		i2 = (0) + (_string_const_2)			# LN: 116 | 
-427   	 00AF	 80880000		call (__div)			# LN: 116 | 
-428   	 00B0	 91750003		i1 = i7 - (0x3)			# LN: 116 | 
-429   	 00B1	 18414C01		a0 = xmem[i1]; a1 =+ a0			# LN: 116, 116 | 
-430   	 00B2	 B2090030		i0 = i2			# LN: 116 | 
-431   	 00B3	 80880000		call (_printf)			# LN: 116 | 
-432   	 00B4	 800800B5		jmp (endif_2)			# LN: 116 | 
-433   	 00B5				cline_116_0:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
-434   	 00B5				endif_2:			/* LN: 115 | CYCLE: 0 | RULES: () */ 
-435   	 00B5				else_2:			/* LN: 115 | CYCLE: 0 | RULES: () */ 
-436   	 00B5	 90750004		i0 = i7 - (0x4)			# LN: 119 | 
-437   	 00B6	 00004DC0		a0 = 0			# LN: 119 | 
-438   	 00B7	 98540000		xmem[i0] = a0h			# LN: 119 | 
-439   	 00B8	 81000191		do (0x10), label_end_93			# LN: 119 | 
-440   	 00B9				cline_119_0:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
-441   	 00B9				label_begin_93:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
-442   	 00B9	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
-443   	 00BA	 00004DC0		a0 = 0			# LN: 121 | 
-444   	 00BB	 98540000		xmem[i0] = a0h			# LN: 121 | 
-445   	 00BC				for_5:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
-446   	 00BC	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
-447   	 00BD	 88140000		a0 = xmem[i0]			# LN: 121 | 
-448   	 00BE	 89040000		a1 = xmem[_nChannelsOut + 0]			# LN: 121 | 
-449   	 00BF	 00004F08		a0 - a1			# LN: 121 | 
-450   	 00C0	 84C8018C		if (a >= 0) jmp (for_end_5)			# LN: 121 | 
-451   	 00C1				cline_121_0:			/* LN: 123 | CYCLE: 0 | RULES: () */ 
-452   	 00C1	 00004DC0		a0 = 0			# LN: 123 | 
-453   	 00C2	 98440000		xmem[_channel + 0] = a0h			# LN: 123 | 
-454   	 00C3				cline_123_0:			/* LN: 124 | CYCLE: 0 | RULES: () */ 
-455   	 00C3				switch_1:			/* LN: 124 | CYCLE: 0 | RULES: () */ 
-456   	 00C3	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
-457   	 00C4	 00004E80		a0 & a0			# LN: 124 | 
-458   	 00C5	 840800D3		if (a == 0) jmp (case_4)			# LN: 124 | 
-459   	 00C6	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
-460   	 00C7	 894A0001		uhalfword(a1) = (0x1)			# LN: 124 | 
-461   	 00C8	 00004F08		a0 - a1			# LN: 124 | 
-462   	 00C9	 840800F3		if (a == 0) jmp (case_5)			# LN: 124 | 
-463   	 00CA	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
-464   	 00CB	 894A0002		uhalfword(a1) = (0x2)			# LN: 124 | 
-465   	 00CC	 00004F08		a0 - a1			# LN: 124 | 
-466   	 00CD	 8408011B		if (a == 0) jmp (case_6)			# LN: 124 | 
-467   	 00CE	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
-468   	 00CF	 894A0003		uhalfword(a1) = (0x3)			# LN: 124 | 
-469   	 00D0	 00004F08		a0 - a1			# LN: 124 | 
-470   	 00D1	 84080143		if (a == 0) jmp (case_7)			# LN: 124 | 
-471   	 00D2	 80080173		jmp (default_1)			# LN: 124 | 
-472   	 00D3				cline_124_0:			/* LN: 127 | CYCLE: 0 | RULES: () */ 
-473   	 00D3				case_4:			/* LN: 126 | CYCLE: 0 | RULES: () */ 
-474   	 00D3	 90750005		i0 = i7 - (0x5)			# LN: 127 | 
-475   	 00D4	 88140000		a0 = xmem[i0]			# LN: 127 | 
-476   	 00D5	 00004E80		a0 & a0			# LN: 127 | 
-477   	 00D6	 844800DA		if (a != 0) jmp (else_3)			# LN: 127 | 
-478   	 00D7	 00004DC0		a0 = 0			# LN: 127 | 
-479   	 00D8	 98440000		xmem[_channel + 0] = a0h			# LN: 127 | 
-480   	 00D9	 800800DA		jmp (endif_3)			# LN: 127 | 
-481   	 00DA				cline_127_0:			/* LN: 128 | CYCLE: 0 | RULES: () */ 
-482   	 00DA				endif_3:			/* LN: 127 | CYCLE: 0 | RULES: () */ 
-483   	 00DA				else_3:			/* LN: 127 | CYCLE: 0 | RULES: () */ 
-484   	 00DA	 90750005		i0 = i7 - (0x5)			# LN: 128 | 
-485   	 00DB	 88140000		a0 = xmem[i0]			# LN: 128 | 
-486   	 00DC	 894A0001		uhalfword(a1) = (0x1)			# LN: 128 | 
-487   	 00DD	 00004F08		a0 - a1			# LN: 128 | 
-488   	 00DE	 844800E2		if (a != 0) jmp (else_4)			# LN: 128 | 
-489   	 00DF	 884A0001		uhalfword(a0) = (0x1)			# LN: 128 | 
-490   	 00E0	 98440000		xmem[_channel + 0] = a0h			# LN: 128 | 
-491   	 00E1	 800800E2		jmp (endif_4)			# LN: 128 | 
-492   	 00E2				cline_128_0:			/* LN: 129 | CYCLE: 0 | RULES: () */ 
-493   	 00E2				endif_4:			/* LN: 128 | CYCLE: 0 | RULES: () */ 
-494   	 00E2				else_4:			/* LN: 128 | CYCLE: 0 | RULES: () */ 
-495   	 00E2	 90750005		i0 = i7 - (0x5)			# LN: 129 | 
-496   	 00E3	 88140000		a0 = xmem[i0]			# LN: 129 | 
-497   	 00E4	 894A0002		uhalfword(a1) = (0x2)			# LN: 129 | 
-498   	 00E5	 00004F08		a0 - a1			# LN: 129 | 
-499   	 00E6	 844800EA		if (a != 0) jmp (else_5)			# LN: 129 | 
-500   	 00E7	 884A0004		uhalfword(a0) = (0x4)			# LN: 129 | 
-501   	 00E8	 98440000		xmem[_channel + 0] = a0h			# LN: 129 | 
-502   	 00E9	 800800EA		jmp (endif_5)			# LN: 129 | 
-503   	 00EA				cline_129_0:			/* LN: 130 | CYCLE: 0 | RULES: () */ 
-504   	 00EA				endif_5:			/* LN: 129 | CYCLE: 0 | RULES: () */ 
-505   	 00EA				else_5:			/* LN: 129 | CYCLE: 0 | RULES: () */ 
-506   	 00EA	 90750005		i0 = i7 - (0x5)			# LN: 130 | 
-507   	 00EB	 88140000		a0 = xmem[i0]			# LN: 130 | 
-508   	 00EC	 894A0003		uhalfword(a1) = (0x3)			# LN: 130 | 
-509   	 00ED	 00004F08		a0 - a1			# LN: 130 | 
-510   	 00EE	 844800F2		if (a != 0) jmp (else_6)			# LN: 130 | 
-511   	 00EF	 884A0005		uhalfword(a0) = (0x5)			# LN: 130 | 
-512   	 00F0	 98440000		xmem[_channel + 0] = a0h			# LN: 130 | 
-513   	 00F1	 800800F2		jmp (endif_6)			# LN: 130 | 
-514   	 00F2				cline_130_0:			/* LN: 131 | CYCLE: 0 | RULES: () */ 
-515   	 00F2				endif_6:			/* LN: 130 | CYCLE: 0 | RULES: () */ 
-516   	 00F2				else_6:			/* LN: 130 | CYCLE: 0 | RULES: () */ 
-517   	 00F2	 80080174		jmp (switch_end_1)			# LN: 131 | 
-518   	 00F3				cline_131_0:			/* LN: 133 | CYCLE: 0 | RULES: () */ 
-519   	 00F3				case_5:			/* LN: 132 | CYCLE: 0 | RULES: () */ 
-520   	 00F3	 90750005		i0 = i7 - (0x5)			# LN: 133 | 
-521   	 00F4	 88140000		a0 = xmem[i0]			# LN: 133 | 
-522   	 00F5	 00004E80		a0 & a0			# LN: 133 | 
-523   	 00F6	 844800FA		if (a != 0) jmp (else_7)			# LN: 133 | 
-524   	 00F7	 00004DC0		a0 = 0			# LN: 133 | 
-525   	 00F8	 98440000		xmem[_channel + 0] = a0h			# LN: 133 | 
-526   	 00F9	 800800FA		jmp (endif_7)			# LN: 133 | 
-527   	 00FA				cline_133_0:			/* LN: 134 | CYCLE: 0 | RULES: () */ 
-528   	 00FA				endif_7:			/* LN: 133 | CYCLE: 0 | RULES: () */ 
-529   	 00FA				else_7:			/* LN: 133 | CYCLE: 0 | RULES: () */ 
-530   	 00FA	 90750005		i0 = i7 - (0x5)			# LN: 134 | 
-531   	 00FB	 88140000		a0 = xmem[i0]			# LN: 134 | 
-532   	 00FC	 894A0001		uhalfword(a1) = (0x1)			# LN: 134 | 
-533   	 00FD	 00004F08		a0 - a1			# LN: 134 | 
-534   	 00FE	 84480102		if (a != 0) jmp (else_8)			# LN: 134 | 
-535   	 00FF	 884A0001		uhalfword(a0) = (0x1)			# LN: 134 | 
-536   	 0100	 98440000		xmem[_channel + 0] = a0h			# LN: 134 | 
-537   	 0101	 80080102		jmp (endif_8)			# LN: 134 | 
-538   	 0102				cline_134_0:			/* LN: 135 | CYCLE: 0 | RULES: () */ 
-539   	 0102				endif_8:			/* LN: 134 | CYCLE: 0 | RULES: () */ 
-540   	 0102				else_8:			/* LN: 134 | CYCLE: 0 | RULES: () */ 
-541   	 0102	 90750005		i0 = i7 - (0x5)			# LN: 135 | 
-542   	 0103	 88140000		a0 = xmem[i0]			# LN: 135 | 
-543   	 0104	 894A0002		uhalfword(a1) = (0x2)			# LN: 135 | 
-544   	 0105	 00004F08		a0 - a1			# LN: 135 | 
-545   	 0106	 8448010A		if (a != 0) jmp (else_9)			# LN: 135 | 
-546   	 0107	 884A0003		uhalfword(a0) = (0x3)			# LN: 135 | 
-547   	 0108	 98440000		xmem[_channel + 0] = a0h			# LN: 135 | 
-548   	 0109	 8008010A		jmp (endif_9)			# LN: 135 | 
-549   	 010A				cline_135_0:			/* LN: 136 | CYCLE: 0 | RULES: () */ 
-550   	 010A				endif_9:			/* LN: 135 | CYCLE: 0 | RULES: () */ 
-551   	 010A				else_9:			/* LN: 135 | CYCLE: 0 | RULES: () */ 
-552   	 010A	 90750005		i0 = i7 - (0x5)			# LN: 136 | 
-553   	 010B	 88140000		a0 = xmem[i0]			# LN: 136 | 
-554   	 010C	 894A0003		uhalfword(a1) = (0x3)			# LN: 136 | 
-555   	 010D	 00004F08		a0 - a1			# LN: 136 | 
-556   	 010E	 84480112		if (a != 0) jmp (else_10)			# LN: 136 | 
-557   	 010F	 884A0004		uhalfword(a0) = (0x4)			# LN: 136 | 
-558   	 0110	 98440000		xmem[_channel + 0] = a0h			# LN: 136 | 
-559   	 0111	 80080112		jmp (endif_10)			# LN: 136 | 
-560   	 0112				cline_136_0:			/* LN: 137 | CYCLE: 0 | RULES: () */ 
-561   	 0112				endif_10:			/* LN: 136 | CYCLE: 0 | RULES: () */ 
-562   	 0112				else_10:			/* LN: 136 | CYCLE: 0 | RULES: () */ 
-563   	 0112	 90750005		i0 = i7 - (0x5)			# LN: 137 | 
-564   	 0113	 88140000		a0 = xmem[i0]			# LN: 137 | 
-565   	 0114	 894A0004		uhalfword(a1) = (0x4)			# LN: 137 | 
-566   	 0115	 00004F08		a0 - a1			# LN: 137 | 
-567   	 0116	 8448011A		if (a != 0) jmp (else_11)			# LN: 137 | 
-568   	 0117	 884A0005		uhalfword(a0) = (0x5)			# LN: 137 | 
-569   	 0118	 98440000		xmem[_channel + 0] = a0h			# LN: 137 | 
-570   	 0119	 8008011A		jmp (endif_11)			# LN: 137 | 
-571   	 011A				cline_137_0:			/* LN: 138 | CYCLE: 0 | RULES: () */ 
-572   	 011A				endif_11:			/* LN: 137 | CYCLE: 0 | RULES: () */ 
-573   	 011A				else_11:			/* LN: 137 | CYCLE: 0 | RULES: () */ 
-574   	 011A	 80080174		jmp (switch_end_1)			# LN: 138 | 
-575   	 011B				cline_138_0:			/* LN: 140 | CYCLE: 0 | RULES: () */ 
-576   	 011B				case_6:			/* LN: 139 | CYCLE: 0 | RULES: () */ 
-577   	 011B	 90750005		i0 = i7 - (0x5)			# LN: 140 | 
-578   	 011C	 88140000		a0 = xmem[i0]			# LN: 140 | 
-579   	 011D	 00004E80		a0 & a0			# LN: 140 | 
-580   	 011E	 84480122		if (a != 0) jmp (else_12)			# LN: 140 | 
-581   	 011F	 00004DC0		a0 = 0			# LN: 140 | 
-582   	 0120	 98440000		xmem[_channel + 0] = a0h			# LN: 140 | 
-583   	 0121	 80080122		jmp (endif_12)			# LN: 140 | 
-584   	 0122				cline_140_0:			/* LN: 141 | CYCLE: 0 | RULES: () */ 
-585   	 0122				endif_12:			/* LN: 140 | CYCLE: 0 | RULES: () */ 
-586   	 0122				else_12:			/* LN: 140 | CYCLE: 0 | RULES: () */ 
-587   	 0122	 90750005		i0 = i7 - (0x5)			# LN: 141 | 
-588   	 0123	 88140000		a0 = xmem[i0]			# LN: 141 | 
-589   	 0124	 894A0001		uhalfword(a1) = (0x1)			# LN: 141 | 
-590   	 0125	 00004F08		a0 - a1			# LN: 141 | 
-591   	 0126	 8448012A		if (a != 0) jmp (else_13)			# LN: 141 | 
-592   	 0127	 884A0001		uhalfword(a0) = (0x1)			# LN: 141 | 
-593   	 0128	 98440000		xmem[_channel + 0] = a0h			# LN: 141 | 
-594   	 0129	 8008012A		jmp (endif_13)			# LN: 141 | 
-595   	 012A				cline_141_0:			/* LN: 142 | CYCLE: 0 | RULES: () */ 
-596   	 012A				endif_13:			/* LN: 141 | CYCLE: 0 | RULES: () */ 
-597   	 012A				else_13:			/* LN: 141 | CYCLE: 0 | RULES: () */ 
-598   	 012A	 90750005		i0 = i7 - (0x5)			# LN: 142 | 
-599   	 012B	 88140000		a0 = xmem[i0]			# LN: 142 | 
-600   	 012C	 894A0002		uhalfword(a1) = (0x2)			# LN: 142 | 
-601   	 012D	 00004F08		a0 - a1			# LN: 142 | 
-602   	 012E	 84480132		if (a != 0) jmp (else_14)			# LN: 142 | 
-603   	 012F	 884A0002		uhalfword(a0) = (0x2)			# LN: 142 | 
-604   	 0130	 98440000		xmem[_channel + 0] = a0h			# LN: 142 | 
-605   	 0131	 80080132		jmp (endif_14)			# LN: 142 | 
-606   	 0132				cline_142_0:			/* LN: 143 | CYCLE: 0 | RULES: () */ 
-607   	 0132				endif_14:			/* LN: 142 | CYCLE: 0 | RULES: () */ 
-608   	 0132				else_14:			/* LN: 142 | CYCLE: 0 | RULES: () */ 
-609   	 0132	 90750005		i0 = i7 - (0x5)			# LN: 143 | 
-610   	 0133	 88140000		a0 = xmem[i0]			# LN: 143 | 
-611   	 0134	 894A0003		uhalfword(a1) = (0x3)			# LN: 143 | 
-612   	 0135	 00004F08		a0 - a1			# LN: 143 | 
-613   	 0136	 8448013A		if (a != 0) jmp (else_15)			# LN: 143 | 
-614   	 0137	 884A0004		uhalfword(a0) = (0x4)			# LN: 143 | 
-615   	 0138	 98440000		xmem[_channel + 0] = a0h			# LN: 143 | 
-616   	 0139	 8008013A		jmp (endif_15)			# LN: 143 | 
-617   	 013A				cline_143_0:			/* LN: 144 | CYCLE: 0 | RULES: () */ 
-618   	 013A				endif_15:			/* LN: 143 | CYCLE: 0 | RULES: () */ 
-619   	 013A				else_15:			/* LN: 143 | CYCLE: 0 | RULES: () */ 
-620   	 013A	 90750005		i0 = i7 - (0x5)			# LN: 144 | 
-621   	 013B	 88140000		a0 = xmem[i0]			# LN: 144 | 
-622   	 013C	 894A0004		uhalfword(a1) = (0x4)			# LN: 144 | 
-623   	 013D	 00004F08		a0 - a1			# LN: 144 | 
-624   	 013E	 84480142		if (a != 0) jmp (else_16)			# LN: 144 | 
-625   	 013F	 884A0005		uhalfword(a0) = (0x5)			# LN: 144 | 
-626   	 0140	 98440000		xmem[_channel + 0] = a0h			# LN: 144 | 
-627   	 0141	 80080142		jmp (endif_16)			# LN: 144 | 
-628   	 0142				cline_144_0:			/* LN: 145 | CYCLE: 0 | RULES: () */ 
-629   	 0142				endif_16:			/* LN: 144 | CYCLE: 0 | RULES: () */ 
-630   	 0142				else_16:			/* LN: 144 | CYCLE: 0 | RULES: () */ 
-631   	 0142	 80080174		jmp (switch_end_1)			# LN: 145 | 
-632   	 0143				cline_145_0:			/* LN: 147 | CYCLE: 0 | RULES: () */ 
-633   	 0143				case_7:			/* LN: 146 | CYCLE: 0 | RULES: () */ 
-634   	 0143	 90750005		i0 = i7 - (0x5)			# LN: 147 | 
-635   	 0144	 88140000		a0 = xmem[i0]			# LN: 147 | 
-636   	 0145	 00004E80		a0 & a0			# LN: 147 | 
-637   	 0146	 8448014A		if (a != 0) jmp (else_17)			# LN: 147 | 
-638   	 0147	 00004DC0		a0 = 0			# LN: 147 | 
-639   	 0148	 98440000		xmem[_channel + 0] = a0h			# LN: 147 | 
-640   	 0149	 8008014A		jmp (endif_17)			# LN: 147 | 
-641   	 014A				cline_147_0:			/* LN: 148 | CYCLE: 0 | RULES: () */ 
-642   	 014A				endif_17:			/* LN: 147 | CYCLE: 0 | RULES: () */ 
-643   	 014A				else_17:			/* LN: 147 | CYCLE: 0 | RULES: () */ 
-644   	 014A	 90750005		i0 = i7 - (0x5)			# LN: 148 | 
-645   	 014B	 88140000		a0 = xmem[i0]			# LN: 148 | 
-646   	 014C	 894A0001		uhalfword(a1) = (0x1)			# LN: 148 | 
-647   	 014D	 00004F08		a0 - a1			# LN: 148 | 
-648   	 014E	 84480152		if (a != 0) jmp (else_18)			# LN: 148 | 
-649   	 014F	 884A0001		uhalfword(a0) = (0x1)			# LN: 148 | 
-650   	 0150	 98440000		xmem[_channel + 0] = a0h			# LN: 148 | 
-651   	 0151	 80080152		jmp (endif_18)			# LN: 148 | 
-652   	 0152				cline_148_0:			/* LN: 149 | CYCLE: 0 | RULES: () */ 
-653   	 0152				endif_18:			/* LN: 148 | CYCLE: 0 | RULES: () */ 
-654   	 0152				else_18:			/* LN: 148 | CYCLE: 0 | RULES: () */ 
-655   	 0152	 90750005		i0 = i7 - (0x5)			# LN: 149 | 
-656   	 0153	 88140000		a0 = xmem[i0]			# LN: 149 | 
-657   	 0154	 894A0002		uhalfword(a1) = (0x2)			# LN: 149 | 
-658   	 0155	 00004F08		a0 - a1			# LN: 149 | 
-659   	 0156	 8448015A		if (a != 0) jmp (else_19)			# LN: 149 | 
-660   	 0157	 884A0002		uhalfword(a0) = (0x2)			# LN: 149 | 
-661   	 0158	 98440000		xmem[_channel + 0] = a0h			# LN: 149 | 
-662   	 0159	 8008015A		jmp (endif_19)			# LN: 149 | 
-663   	 015A				cline_149_0:			/* LN: 150 | CYCLE: 0 | RULES: () */ 
-664   	 015A				endif_19:			/* LN: 149 | CYCLE: 0 | RULES: () */ 
-665   	 015A				else_19:			/* LN: 149 | CYCLE: 0 | RULES: () */ 
-666   	 015A	 90750005		i0 = i7 - (0x5)			# LN: 150 | 
-667   	 015B	 88140000		a0 = xmem[i0]			# LN: 150 | 
-668   	 015C	 894A0003		uhalfword(a1) = (0x3)			# LN: 150 | 
-669   	 015D	 00004F08		a0 - a1			# LN: 150 | 
-670   	 015E	 84480162		if (a != 0) jmp (else_20)			# LN: 150 | 
-671   	 015F	 884A0003		uhalfword(a0) = (0x3)			# LN: 150 | 
-672   	 0160	 98440000		xmem[_channel + 0] = a0h			# LN: 150 | 
-673   	 0161	 80080162		jmp (endif_20)			# LN: 150 | 
-674   	 0162				cline_150_0:			/* LN: 151 | CYCLE: 0 | RULES: () */ 
-675   	 0162				endif_20:			/* LN: 150 | CYCLE: 0 | RULES: () */ 
-676   	 0162				else_20:			/* LN: 150 | CYCLE: 0 | RULES: () */ 
-677   	 0162	 90750005		i0 = i7 - (0x5)			# LN: 151 | 
-678   	 0163	 88140000		a0 = xmem[i0]			# LN: 151 | 
-679   	 0164	 894A0004		uhalfword(a1) = (0x4)			# LN: 151 | 
-680   	 0165	 00004F08		a0 - a1			# LN: 151 | 
-681   	 0166	 8448016A		if (a != 0) jmp (else_21)			# LN: 151 | 
-682   	 0167	 884A0004		uhalfword(a0) = (0x4)			# LN: 151 | 
-683   	 0168	 98440000		xmem[_channel + 0] = a0h			# LN: 151 | 
-684   	 0169	 8008016A		jmp (endif_21)			# LN: 151 | 
-685   	 016A				cline_151_0:			/* LN: 152 | CYCLE: 0 | RULES: () */ 
-686   	 016A				endif_21:			/* LN: 151 | CYCLE: 0 | RULES: () */ 
-687   	 016A				else_21:			/* LN: 151 | CYCLE: 0 | RULES: () */ 
-688   	 016A	 90750005		i0 = i7 - (0x5)			# LN: 152 | 
-689   	 016B	 88140000		a0 = xmem[i0]			# LN: 152 | 
-690   	 016C	 894A0005		uhalfword(a1) = (0x5)			# LN: 152 | 
-691   	 016D	 00004F08		a0 - a1			# LN: 152 | 
-692   	 016E	 84480172		if (a != 0) jmp (else_22)			# LN: 152 | 
-693   	 016F	 884A0005		uhalfword(a0) = (0x5)			# LN: 152 | 
-694   	 0170	 98440000		xmem[_channel + 0] = a0h			# LN: 152 | 
-695   	 0171	 80080172		jmp (endif_22)			# LN: 152 | 
-696   	 0172				cline_152_0:			/* LN: 153 | CYCLE: 0 | RULES: () */ 
-697   	 0172				endif_22:			/* LN: 152 | CYCLE: 0 | RULES: () */ 
-698   	 0172				else_22:			/* LN: 152 | CYCLE: 0 | RULES: () */ 
-699   	 0172	 80080174		jmp (switch_end_1)			# LN: 153 | 
-700   	 0173				cline_153_0:			/* LN: 155 | CYCLE: 0 | RULES: () */ 
-701   	 0173				default_1:			/* LN: 154 | CYCLE: 0 | RULES: () */ 
-702   	 0173	 80080174		jmp (switch_end_1)			# LN: 155 | 
-703   	 0174				cline_155_0:			/* LN: 157 | CYCLE: 0 | RULES: () */ 
-704   	 0174				switch_end_1:			/* LN: 124 | CYCLE: 0 | RULES: () */ 
-705   	 0174	 88040000		a0 = xmem[_channel + 0]			# LN: 157 | 
-706   	 0175	 00004EC0		a0 = a0 << 4			# LN: 157 | 
-707   	 0176	 48707FFF		i0 = a0			# LN: 157 | 
-708   	 0177	 91750004		i1 = i7 - (0x4)			# LN: 157 | 
-709   	 0178	 80050000		i0 = i0 + (_sampleBuffer + 0)			# LN: 157 | 
-710   	 0179	 88140001		a0 = xmem[i1]			# LN: 157 | 
-711   	 017A	 09707FFF		a1 = i0			# LN: 157 | 
-712   	 017B	 00004480		a0 = a1 + a0			# LN: 157 | 
-713   	 017C	 98090030		AnyReg(i0, a0h)			# LN: 157 | 
-714   	 017D	 91750006		i1 = i7 - (0x6)			# LN: 157 | 
-715   	 017E	 88140000		a0 = xmem[i0]			# LN: 157 | 
-716   	 017F	 98540001		xmem[i1] = a0h			# LN: 157 | 
-717   	 0180				cline_157_0:			/* LN: 158 | CYCLE: 0 | RULES: () */ 
-718   	 0180	 88040000		a0 = xmem[_wav_out + 0]			# LN: 158 | 
-719   	 0181	 98090030		AnyReg(i0, a0h)			# LN: 158 | 
-720   	 0182	 91750006		i1 = i7 - (0x6)			# LN: 158 | 
-721   	 0183	 88140001		a0 = xmem[i1]			# LN: 158 | 
-722   	 0184	 80880000		call (_cl_wavwrite_sendsample)			# LN: 158 | 
-723   	 0185				cline_158_0:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
-724   	 0185				init_latch_label_3:			/* LN: 159 | CYCLE: 0 | RULES: () */ 
-725   	 0185	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
-726   	 0186	 88140000		a0 = xmem[i0]			# LN: 121 | 
-727   	 0187	 894A0001		uhalfword(a1) = (0x1)			# LN: 121 | 
-728   	 0188	 00004408		a0 = a0 + a1			# LN: 121 | 
-729   	 0189	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
-730   	 018A	 98540000		xmem[i0] = a0h			# LN: 121 | 
-731   	 018B	 800800BC		jmp (for_5)			# LN: 121 | 
-732   	 018C				cline_121_1:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
-733   	 018C				init_latch_label_4:			/* LN: 160 | CYCLE: 0 | RULES: () */ 
-734   	 018C				for_end_5:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
-735   	 018C	 90750004		i0 = i7 - (0x4)			# LN: 119 | 
-736   	 018D	 88140000		a0 = xmem[i0]			# LN: 119 | 
-737   	 018E	 894A0001		uhalfword(a1) = (0x1)			# LN: 119 | 
-738   	 018F	 00004408		a0 = a0 + a1			# LN: 119 | 
-739   	 0190	 90750004		i0 = i7 - (0x4)			# LN: 119 | 
-740   	 0191				label_end_93:			# LN: 119 | CYCLE: 5 | RULES: ()
-741   	 0191	 98540000		xmem[i0] = a0h			# LN: 119 | 
-742   	 0192				cline_119_1:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
-743   	 0192				init_latch_label_5:			/* LN: 161 | CYCLE: 0 | RULES: () */ 
-744   	 0192				for_end_4:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
-745   	 0192	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
-746   	 0193	 88140000		a0 = xmem[i0]			# LN: 102 | 
-747   	 0194	 894A0001		uhalfword(a1) = (0x1)			# LN: 102 | 
-748   	 0195	 00004408		a0 = a0 + a1			# LN: 102 | 
-749   	 0196	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
-750   	 0197	 98540000		xmem[i0] = a0h			# LN: 102 | 
-751   	 0198	 80080072		jmp (for_1)			# LN: 102 | 
-752   	 0199				cline_102_1:			/* LN: 166 | CYCLE: 0 | RULES: () */ 
-753   	 0199				for_end_1:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
-754   	 0199	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 166 | 
-755   	 019A	 80880000		call (_cl_wavread_close)			# LN: 166 | 
-756   	 019B				cline_166_0:			/* LN: 167 | CYCLE: 0 | RULES: () */ 
-757   	 019B	 88040000		a0 = xmem[_wav_out + 0]			# LN: 167 | 
-758   	 019C	 98090030		AnyReg(i0, a0h)			# LN: 167 | 
-759   	 019D	 80880000		call (_cl_wavwrite_close)			# LN: 167 | 
-760   	 019E				cline_167_0:			/* LN: 170 | CYCLE: 0 | RULES: () */ 
-761   	 019E	 00004DC0		a0 = 0			# LN: 170 | 
-762   	 019F	 800801A0		jmp (__epilogue_240)			# LN: 170 | 
-763   	 01A0				cline_170_0:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
-764   	 01A0				__epilogue_240:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
-765   	 01A0	 97750006		i7 = i7 - (0x6)			# LN: 171 | 
-766   	 01A1	 02177FFF		i7 -= 1			# LN: 171 | 
-767   	 01A2	 B2140027		i2 = xmem[i7]; i7 -= 1			# LN: 171, 171 | 
-768   	 01A3	 81880000		ret			# LN: 171 | 
-769   						(null)
+177   						
+178   						
+179   						
+180   							# This construction should ensure linking of crt0 in case when target is a standalone program without the OS
+181   							.if defined(_OVLY_)
+182   								.if .strcmp('standalone',_OVLY_)=0
+183   								.if .strcmp('crystal32',_TARGET_FAMILY_)=0
+184   	 0000							.extern __start         # dummy use of __start to force linkage of crt0
+185   	 0000				dummy		.equ(__start)
+186   								.else
+187   									.extern __intvec         # dummy use of __intvec to force linkage of intvec
+188   						dummy		.equ(__intvec)
+189   								.endif
+190   								.endif
+191   							.endif
+192   						
+193   	 0000				_main:			/* LN: 31 | CYCLE: 0 | RULES: () */ 
+194   	 0000	 BB540007		xmem[i7] = i7			# LN: 31 | 
+195   	 0001	 020F7FFF		i7 += 1			# LN: 31 | 
+196   	 0002	 B2540017		xmem[i7] = i2; i7 += 1			# LN: 31, 31 | 
+197   	 0003	 87750006		i7 = i7 + (0x6)			# LN: 31 | 
+198   	 0004	 91750001		i1 = i7 - (0x1)			# LN: 31 | 
+199   	 0005	 98540001		xmem[i1] = a0h			# LN: 31 | 
+200   	 0006	 91750002		i1 = i7 - (0x2)			# LN: 31 | 
+201   	 0007	 B0540001		xmem[i1] = i0			# LN: 31 | 
+202   	 0008				cline_31_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
+203   	 0008	 00004DC0		a0 = 0			# LN: 34 | 
+204   	 0009	 98440000		xmem[_i + 0] = a0h			# LN: 34 | 
+205   	 000A				for_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
+206   	 000A	 88040000		a0 = xmem[_i + 0]			# LN: 34 | 
+207   	 000B	 894A0008		uhalfword(a1) = (0x8)			# LN: 34 | 
+208   	 000C	 00004F08		a0 - a1			# LN: 34 | 
+209   	 000D	 84C80019		if (a >= 0) jmp (for_end_0)			# LN: 34 | 
+210   	 000E				cline_34_0:			/* LN: 35 | CYCLE: 0 | RULES: () */ 
+211   	 000E	 88040000		a0 = xmem[_i + 0]			# LN: 35 | 
+212   	 000F	 00004EC0		a0 = a0 << 4			# LN: 35 | 
+213   	 0010	 48704DC0		i0 = a0; a0 = 0			# LN: 35, 35 | 
+214   	 0011	 894A0010		uhalfword(a1) = (0x10)			# LN: 35 | 
+215   	 0012	 80050000		i0 = i0 + (_sampleBuffer + 0)			# LN: 35 | 
+216   	 0013	 80880000		call (_memset)			# LN: 35 | 
+217   	 0014				cline_35_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
+218   	 0014				init_latch_label_0:			/* LN: 35 | CYCLE: 0 | RULES: () */ 
+219   	 0014	 88040000		a0 = xmem[_i + 0]			# LN: 34 | 
+220   	 0015	 894A0001		uhalfword(a1) = (0x1)			# LN: 34 | 
+221   	 0016	 00004408		a0 = a0 + a1			# LN: 34 | 
+222   	 0017	 98440000		xmem[_i + 0] = a0h			# LN: 34 | 
+223   	 0018	 8008000A		jmp (for_0)			# LN: 34 | 
+224   	 0019				cline_34_1:			/* LN: 40 | CYCLE: 0 | RULES: () */ 
+225   	 0019				for_end_0:			/* LN: 34 | CYCLE: 0 | RULES: () */ 
+226   	 0019	 90750002		i0 = i7 - (0x2)			# LN: 40 | 
+227   	 001A	 B0140000		i0 = xmem[i0]			# LN: 40 | 
+228   	 001B	 A1050000		i1 = (0) + (_WavInputName)			# LN: 40 | 
+229   	 001C	 B8140000		i4 = xmem[i0]			# LN: 40 | 
+230   	 001D	 B1090030		i0 = i1			# LN: 40 | 
+231   	 001E	 B8090031		i1 = i4			# LN: 40 | 
+232   	 001F	 80880000		call (_strcpy)			# LN: 40 | 
+233   	 0020				cline_40_0:			/* LN: 41 | CYCLE: 0 | RULES: () */ 
+234   	 0020	 A0050000		i0 = (0) + (_WavInputName)			# LN: 41 | 
+235   	 0021	 80880000		call (_cl_wavread_open)			# LN: 41 | 
+236   	 0022	 98090030		AnyReg(i0, a0h)			# LN: 41 | 
+237   	 0023	 B0440000		xmem[_wav_in + 0] = i0			# LN: 41 | 
+238   	 0024				cline_41_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
+239   	 0024	 88040000		a0 = xmem[_wav_in + 0]			# LN: 42 | 
+240   	 0025	 00004E80		a0 & a0			# LN: 42 | 
+241   	 0026	 8448002B		if (a != 0) jmp (else_0)			# LN: 42 | 
+242   	 0027				cline_42_0:			/* LN: 44 | CYCLE: 0 | RULES: () */ 
+243   	 0027	 A0050000		i0 = (0) + (_string_const_0)			# LN: 44 | 
+244   	 0028	 80880000		call (_printf)			# LN: 44 | 
+245   	 0029				cline_44_0:			/* LN: 45 | CYCLE: 0 | RULES: () */ 
+246   	 0029	 886AFFFF		halfword(a0) = (0xffff)			# LN: 45 | 
+247   	 002A	 800801A0		jmp (__epilogue_254)			# LN: 45 | 
+248   	 002B				cline_45_0:			/* LN: 52 | CYCLE: 0 | RULES: () */ 
+249   	 002B				endif_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
+250   	 002B				else_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
+251   	 002B	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 52 | 
+252   	 002C	 80880000		call (_cl_wavread_getnchannels)			# LN: 52 | 
+253   	 002D	 98440000		xmem[_nChannelsIn + 0] = a0h			# LN: 52 | 
+254   	 002E				cline_52_0:			/* LN: 53 | CYCLE: 0 | RULES: () */ 
+255   	 002E	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 53 | 
+256   	 002F	 80880000		call (_cl_wavread_bits_per_sample)			# LN: 53 | 
+257   	 0030	 98440000		xmem[_bitsPerSample + 0] = a0h			# LN: 53 | 
+258   	 0031				cline_53_0:			/* LN: 54 | CYCLE: 0 | RULES: () */ 
+259   	 0031	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 54 | 
+260   	 0032	 80880000		call (_cl_wavread_frame_rate)			# LN: 54 | 
+261   	 0033	 98440000		xmem[_sampleRate + 0] = a0h			# LN: 54 | 
+262   	 0034				cline_54_0:			/* LN: 55 | CYCLE: 0 | RULES: () */ 
+263   	 0034	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 55 | 
+264   	 0035	 80880000		call (_cl_wavread_number_of_frames)			# LN: 55 | 
+265   	 0036	 98440000		xmem[_iNumSamples + 0] = a0h			# LN: 55 | 
+266   	 0037				cline_55_0:			/* LN: 61 | CYCLE: 0 | RULES: () */ 
+267   	 0037	 88040000		a0 = xmem[_gain + 0]			# LN: 61 | 
+268   	 0038	 89040000		a1 = xmem[_mode + 0]			# LN: 61 | 
+269   	 0039	 80880000		call (_initialize_processing)			# LN: 61 | 
+270   	 003A				cline_61_0:			/* LN: 62 | CYCLE: 0 | RULES: () */ 
+271   	 003A				switch_0:			/* LN: 62 | CYCLE: 0 | RULES: () */ 
+272   	 003A	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
+273   	 003B	 00004E80		a0 & a0			# LN: 62 | 
+274   	 003C	 8408004A		if (a == 0) jmp (case_0)			# LN: 62 | 
+275   	 003D	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
+276   	 003E	 894A0001		uhalfword(a1) = (0x1)			# LN: 62 | 
+277   	 003F	 00004F08		a0 - a1			# LN: 62 | 
+278   	 0040	 8408004D		if (a == 0) jmp (case_1)			# LN: 62 | 
+279   	 0041	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
+280   	 0042	 894A0002		uhalfword(a1) = (0x2)			# LN: 62 | 
+281   	 0043	 00004F08		a0 - a1			# LN: 62 | 
+282   	 0044	 84080050		if (a == 0) jmp (case_2)			# LN: 62 | 
+283   	 0045	 88040000		a0 = xmem[_mode + 0]			# LN: 62 | 
+284   	 0046	 894A0003		uhalfword(a1) = (0x3)			# LN: 62 | 
+285   	 0047	 00004F08		a0 - a1			# LN: 62 | 
+286   	 0048	 84080053		if (a == 0) jmp (case_3)			# LN: 62 | 
+287   	 0049	 80080056		jmp (default_0)			# LN: 62 | 
+288   	 004A				cline_62_0:			/* LN: 64 | CYCLE: 0 | RULES: () */ 
+289   	 004A				case_0:			/* LN: 63 | CYCLE: 0 | RULES: () */ 
+290   	 004A	 884A0004		uhalfword(a0) = (0x4)			# LN: 64 | 
+291   	 004B	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 64 | 
+292   	 004C				cline_64_0:			/* LN: 65 | CYCLE: 0 | RULES: () */ 
+293   	 004C	 80080059		jmp (switch_end_0)			# LN: 65 | 
+294   	 004D				cline_65_0:			/* LN: 67 | CYCLE: 0 | RULES: () */ 
+295   	 004D				case_1:			/* LN: 66 | CYCLE: 0 | RULES: () */ 
+296   	 004D	 884A0005		uhalfword(a0) = (0x5)			# LN: 67 | 
+297   	 004E	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 67 | 
+298   	 004F				cline_67_0:			/* LN: 68 | CYCLE: 0 | RULES: () */ 
+299   	 004F	 80080059		jmp (switch_end_0)			# LN: 68 | 
+300   	 0050				cline_68_0:			/* LN: 70 | CYCLE: 0 | RULES: () */ 
+301   	 0050				case_2:			/* LN: 69 | CYCLE: 0 | RULES: () */ 
+302   	 0050	 884A0005		uhalfword(a0) = (0x5)			# LN: 70 | 
+303   	 0051	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 70 | 
+304   	 0052				cline_70_0:			/* LN: 71 | CYCLE: 0 | RULES: () */ 
+305   	 0052	 80080059		jmp (switch_end_0)			# LN: 71 | 
+306   	 0053				cline_71_0:			/* LN: 73 | CYCLE: 0 | RULES: () */ 
+307   	 0053				case_3:			/* LN: 72 | CYCLE: 0 | RULES: () */ 
+308   	 0053	 884A0006		uhalfword(a0) = (0x6)			# LN: 73 | 
+309   	 0054	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 73 | 
+310   	 0055				cline_73_0:			/* LN: 74 | CYCLE: 0 | RULES: () */ 
+311   	 0055	 80080059		jmp (switch_end_0)			# LN: 74 | 
+312   	 0056				cline_74_0:			/* LN: 76 | CYCLE: 0 | RULES: () */ 
+313   	 0056				default_0:			/* LN: 75 | CYCLE: 0 | RULES: () */ 
+314   	 0056	 884A0002		uhalfword(a0) = (0x2)			# LN: 76 | 
+315   	 0057	 98440000		xmem[_nChannelsOut + 0] = a0h			# LN: 76 | 
+316   	 0058				cline_76_0:			/* LN: 77 | CYCLE: 0 | RULES: () */ 
+317   	 0058	 80080059		jmp (switch_end_0)			# LN: 77 | 
+318   	 0059				cline_77_0:			/* LN: 84 | CYCLE: 0 | RULES: () */ 
+319   	 0059				switch_end_0:			/* LN: 62 | CYCLE: 0 | RULES: () */ 
+320   	 0059	 90750002		i0 = i7 - (0x2)			# LN: 84 | 
+321   	 005A	 B0140000		i0 = xmem[i0]			# LN: 84 | 
+322   	 005B	 A1050000		i1 = (0) + (_WavOutputName)			# LN: 84 | 
+323   	 005C	 02087FFF		i0 += 1			# LN: 84 | 
+324   	 005D	 B8140000		i4 = xmem[i0]			# LN: 84 | 
+325   	 005E	 B1090030		i0 = i1			# LN: 84 | 
+326   	 005F	 B8090031		i1 = i4			# LN: 84 | 
+327   	 0060	 80880000		call (_strcpy)			# LN: 84 | 
+328   	 0061				cline_84_0:			/* LN: 85 | CYCLE: 0 | RULES: () */ 
+329   	 0061	 A0050000		i0 = (0) + (_WavOutputName)			# LN: 85 | 
+330   	 0062	 88040000		a0 = xmem[_bitsPerSample + 0]			# LN: 85 | 
+331   	 0063	 89040000		a1 = xmem[_nChannelsOut + 0]			# LN: 85 | 
+332   	 0064	 8C040000		b0 = xmem[_sampleRate + 0]			# LN: 85 | 
+333   	 0065	 80880000		call (_cl_wavwrite_open)			# LN: 85 | 
+334   	 0066	 98090030		AnyReg(i0, a0h)			# LN: 85 | 
+335   	 0067	 B0440000		xmem[_wav_out + 0] = i0			# LN: 85 | 
+336   	 0068				cline_85_0:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
+337   	 0068	 88040000		a0 = xmem[_wav_out + 0]			# LN: 86 | 
+338   	 0069	 00004E80		a0 & a0			# LN: 86 | 
+339   	 006A	 8448006F		if (a != 0) jmp (else_1)			# LN: 86 | 
+340   	 006B				cline_86_0:			/* LN: 88 | CYCLE: 0 | RULES: () */ 
+341   	 006B	 A0050000		i0 = (0) + (_string_const_1)			# LN: 88 | 
+342   	 006C	 80880000		call (_printf)			# LN: 88 | 
+343   	 006D				cline_88_0:			/* LN: 89 | CYCLE: 0 | RULES: () */ 
+344   	 006D	 886AFFFF		halfword(a0) = (0xffff)			# LN: 89 | 
+345   	 006E	 800801A0		jmp (__epilogue_254)			# LN: 89 | 
+346   	 006F				cline_89_0:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
+347   	 006F				endif_1:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
+348   	 006F				else_1:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
+349   	 006F	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
+350   	 0070	 00004DC0		a0 = 0			# LN: 102 | 
+351   	 0071	 98540000		xmem[i0] = a0h			# LN: 102 | 
+352   	 0072				for_1:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
+353   	 0072	 88040000		a0 = xmem[_iNumSamples + 0]			# LN: 102 | 
+354   	 0073	 894A0010		uhalfword(a1) = (0x10)			# LN: 102 | 
+355   	 0074	 80880000		call (__div)			# LN: 102 | 
+356   	 0075	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
+357   	 0076	 89140000		a1 = xmem[i0]			# LN: 102 | 
+358   	 0077	 00004F01		a1 - a0			# LN: 102 | 
+359   	 0078	 84C80199		if (a >= 0) jmp (for_end_1)			# LN: 102 | 
+360   	 0079				cline_102_0:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
+361   	 0079	 90750004		i0 = i7 - (0x4)			# LN: 104 | 
+362   	 007A	 00004DC0		a0 = 0			# LN: 104 | 
+363   	 007B	 98540000		xmem[i0] = a0h			# LN: 104 | 
+364   	 007C	 810000A2		do (0x10), label_end_92			# LN: 104 | 
+365   	 007D				cline_104_0:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
+366   	 007D				label_begin_92:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
+367   	 007D	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
+368   	 007E	 00004DC0		a0 = 0			# LN: 106 | 
+369   	 007F	 98540000		xmem[i0] = a0h			# LN: 106 | 
+370   	 0080				for_3:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
+371   	 0080	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
+372   	 0081	 88140000		a0 = xmem[i0]			# LN: 106 | 
+373   	 0082	 89040000		a1 = xmem[_nChannelsIn + 0]			# LN: 106 | 
+374   	 0083	 00004F08		a0 - a1			# LN: 106 | 
+375   	 0084	 84C8009D		if (a >= 0) jmp (for_end_3)			# LN: 106 | 
+376   	 0085				cline_106_0:			/* LN: 108 | CYCLE: 0 | RULES: () */ 
+377   	 0085	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 108 | 
+378   	 0086	 80880000		call (_cl_wavread_recvsample)			# LN: 108 | 
+379   	 0087	 90750006		i0 = i7 - (0x6)			# LN: 108 | 
+380   	 0088	 98540000		xmem[i0] = a0h			# LN: 108 | 
+381   	 0089				cline_108_0:			/* LN: 109 | CYCLE: 0 | RULES: () */ 
+382   	 0089	 90750005		i0 = i7 - (0x5)			# LN: 109 | 
+383   	 008A	 88140000		a0 = xmem[i0]			# LN: 109 | 
+384   	 008B	 00004EC0		a0 = a0 << 4			# LN: 109 | 
+385   	 008C	 48707FFF		i0 = a0			# LN: 109 | 
+386   	 008D	 91750004		i1 = i7 - (0x4)			# LN: 109 | 
+387   	 008E	 80050000		i0 = i0 + (_sampleBuffer + 0)			# LN: 109 | 
+388   	 008F	 88140001		a0 = xmem[i1]			# LN: 109 | 
+389   	 0090	 09707FFF		a1 = i0			# LN: 109 | 
+390   	 0091	 00004480		a0 = a1 + a0			# LN: 109 | 
+391   	 0092	 98090030		AnyReg(i0, a0h)			# LN: 109 | 
+392   	 0093	 91750006		i1 = i7 - (0x6)			# LN: 109 | 
+393   	 0094	 88140001		a0 = xmem[i1]			# LN: 109 | 
+394   	 0095	 98540000		xmem[i0] = a0h			# LN: 109 | 
+395   	 0096				cline_109_0:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
+396   	 0096				init_latch_label_1:			/* LN: 110 | CYCLE: 0 | RULES: () */ 
+397   	 0096	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
+398   	 0097	 88140000		a0 = xmem[i0]			# LN: 106 | 
+399   	 0098	 894A0001		uhalfword(a1) = (0x1)			# LN: 106 | 
+400   	 0099	 00004408		a0 = a0 + a1			# LN: 106 | 
+401   	 009A	 90750005		i0 = i7 - (0x5)			# LN: 106 | 
+402   	 009B	 98540000		xmem[i0] = a0h			# LN: 106 | 
+403   	 009C	 80080080		jmp (for_3)			# LN: 106 | 
+404   	 009D				cline_106_1:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
+405   	 009D				init_latch_label_2:			/* LN: 111 | CYCLE: 0 | RULES: () */ 
+406   	 009D				for_end_3:			/* LN: 106 | CYCLE: 0 | RULES: () */ 
+407   	 009D	 90750004		i0 = i7 - (0x4)			# LN: 104 | 
+408   	 009E	 88140000		a0 = xmem[i0]			# LN: 104 | 
+409   	 009F	 894A0001		uhalfword(a1) = (0x1)			# LN: 104 | 
+410   	 00A0	 00004408		a0 = a0 + a1			# LN: 104 | 
+411   	 00A1	 90750004		i0 = i7 - (0x4)			# LN: 104 | 
+412   	 00A2				label_end_92:			# LN: 104 | CYCLE: 5 | RULES: ()
+413   	 00A2	 98540000		xmem[i0] = a0h			# LN: 104 | 
+414   	 00A3				cline_104_1:			/* LN: 113 | CYCLE: 0 | RULES: () */ 
+415   	 00A3				for_end_2:			/* LN: 104 | CYCLE: 0 | RULES: () */ 
+416   	 00A3	 A0050000		i0 = (0) + (_sampleBuffer)			# LN: 113 | 
+417   	 00A4	 A1050000		i1 = (0) + (_sampleBuffer)			# LN: 113 | 
+418   	 00A5	 80880000		call (_processing)			# LN: 113 | 
+419   	 00A6				cline_113_0:			/* LN: 115 | CYCLE: 0 | RULES: () */ 
+420   	 00A6	 90750003		i0 = i7 - (0x3)			# LN: 115 | 
+421   	 00A7	 88140000		a0 = xmem[i0]			# LN: 115 | 
+422   	 00A8	 894A01F4		uhalfword(a1) = (0x1f4)			# LN: 115 | 
+423   	 00A9	 80880000		call (__mod)			# LN: 115 | 
+424   	 00AA	 00004E80		a0 & a0			# LN: 115 | 
+425   	 00AB	 844800B5		if (a != 0) jmp (else_2)			# LN: 115 | 
+426   	 00AC				cline_115_0:			/* LN: 116 | CYCLE: 0 | RULES: () */ 
+427   	 00AC	 88040000		a0 = xmem[_iNumSamples + 0]			# LN: 116 | 
+428   	 00AD	 894A0010		uhalfword(a1) = (0x10)			# LN: 116 | 
+429   	 00AE	 A2050000		i2 = (0) + (_string_const_2)			# LN: 116 | 
+430   	 00AF	 80880000		call (__div)			# LN: 116 | 
+431   	 00B0	 91750003		i1 = i7 - (0x3)			# LN: 116 | 
+432   	 00B1	 18414C01		a0 = xmem[i1]; a1 =+ a0			# LN: 116, 116 | 
+433   	 00B2	 B2090030		i0 = i2			# LN: 116 | 
+434   	 00B3	 80880000		call (_printf)			# LN: 116 | 
+435   	 00B4	 800800B5		jmp (endif_2)			# LN: 116 | 
+436   	 00B5				cline_116_0:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
+437   	 00B5				endif_2:			/* LN: 115 | CYCLE: 0 | RULES: () */ 
+438   	 00B5				else_2:			/* LN: 115 | CYCLE: 0 | RULES: () */ 
+439   	 00B5	 90750004		i0 = i7 - (0x4)			# LN: 119 | 
+440   	 00B6	 00004DC0		a0 = 0			# LN: 119 | 
+441   	 00B7	 98540000		xmem[i0] = a0h			# LN: 119 | 
+442   	 00B8	 81000191		do (0x10), label_end_93			# LN: 119 | 
+443   	 00B9				cline_119_0:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
+444   	 00B9				label_begin_93:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
+445   	 00B9	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
+446   	 00BA	 00004DC0		a0 = 0			# LN: 121 | 
+447   	 00BB	 98540000		xmem[i0] = a0h			# LN: 121 | 
+448   	 00BC				for_5:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
+449   	 00BC	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
+450   	 00BD	 88140000		a0 = xmem[i0]			# LN: 121 | 
+451   	 00BE	 89040000		a1 = xmem[_nChannelsOut + 0]			# LN: 121 | 
+452   	 00BF	 00004F08		a0 - a1			# LN: 121 | 
+453   	 00C0	 84C8018C		if (a >= 0) jmp (for_end_5)			# LN: 121 | 
+454   	 00C1				cline_121_0:			/* LN: 123 | CYCLE: 0 | RULES: () */ 
+455   	 00C1	 00004DC0		a0 = 0			# LN: 123 | 
+456   	 00C2	 98440000		xmem[_channel + 0] = a0h			# LN: 123 | 
+457   	 00C3				cline_123_0:			/* LN: 124 | CYCLE: 0 | RULES: () */ 
+458   	 00C3				switch_1:			/* LN: 124 | CYCLE: 0 | RULES: () */ 
+459   	 00C3	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
+460   	 00C4	 00004E80		a0 & a0			# LN: 124 | 
+461   	 00C5	 840800D3		if (a == 0) jmp (case_4)			# LN: 124 | 
+462   	 00C6	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
+463   	 00C7	 894A0001		uhalfword(a1) = (0x1)			# LN: 124 | 
+464   	 00C8	 00004F08		a0 - a1			# LN: 124 | 
+465   	 00C9	 840800F3		if (a == 0) jmp (case_5)			# LN: 124 | 
+466   	 00CA	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
+467   	 00CB	 894A0002		uhalfword(a1) = (0x2)			# LN: 124 | 
+468   	 00CC	 00004F08		a0 - a1			# LN: 124 | 
+469   	 00CD	 8408011B		if (a == 0) jmp (case_6)			# LN: 124 | 
+470   	 00CE	 88040000		a0 = xmem[_mode + 0]			# LN: 124 | 
+471   	 00CF	 894A0003		uhalfword(a1) = (0x3)			# LN: 124 | 
+472   	 00D0	 00004F08		a0 - a1			# LN: 124 | 
+473   	 00D1	 84080143		if (a == 0) jmp (case_7)			# LN: 124 | 
+474   	 00D2	 80080173		jmp (default_1)			# LN: 124 | 
+475   	 00D3				cline_124_0:			/* LN: 127 | CYCLE: 0 | RULES: () */ 
+476   	 00D3				case_4:			/* LN: 126 | CYCLE: 0 | RULES: () */ 
+477   	 00D3	 90750005		i0 = i7 - (0x5)			# LN: 127 | 
+478   	 00D4	 88140000		a0 = xmem[i0]			# LN: 127 | 
+479   	 00D5	 00004E80		a0 & a0			# LN: 127 | 
+480   	 00D6	 844800DA		if (a != 0) jmp (else_3)			# LN: 127 | 
+481   	 00D7	 00004DC0		a0 = 0			# LN: 127 | 
+482   	 00D8	 98440000		xmem[_channel + 0] = a0h			# LN: 127 | 
+483   	 00D9	 800800DA		jmp (endif_3)			# LN: 127 | 
+484   	 00DA				cline_127_0:			/* LN: 128 | CYCLE: 0 | RULES: () */ 
+485   	 00DA				endif_3:			/* LN: 127 | CYCLE: 0 | RULES: () */ 
+486   	 00DA				else_3:			/* LN: 127 | CYCLE: 0 | RULES: () */ 
+487   	 00DA	 90750005		i0 = i7 - (0x5)			# LN: 128 | 
+488   	 00DB	 88140000		a0 = xmem[i0]			# LN: 128 | 
+489   	 00DC	 894A0001		uhalfword(a1) = (0x1)			# LN: 128 | 
+490   	 00DD	 00004F08		a0 - a1			# LN: 128 | 
+491   	 00DE	 844800E2		if (a != 0) jmp (else_4)			# LN: 128 | 
+492   	 00DF	 884A0001		uhalfword(a0) = (0x1)			# LN: 128 | 
+493   	 00E0	 98440000		xmem[_channel + 0] = a0h			# LN: 128 | 
+494   	 00E1	 800800E2		jmp (endif_4)			# LN: 128 | 
+495   	 00E2				cline_128_0:			/* LN: 129 | CYCLE: 0 | RULES: () */ 
+496   	 00E2				endif_4:			/* LN: 128 | CYCLE: 0 | RULES: () */ 
+497   	 00E2				else_4:			/* LN: 128 | CYCLE: 0 | RULES: () */ 
+498   	 00E2	 90750005		i0 = i7 - (0x5)			# LN: 129 | 
+499   	 00E3	 88140000		a0 = xmem[i0]			# LN: 129 | 
+500   	 00E4	 894A0002		uhalfword(a1) = (0x2)			# LN: 129 | 
+501   	 00E5	 00004F08		a0 - a1			# LN: 129 | 
+502   	 00E6	 844800EA		if (a != 0) jmp (else_5)			# LN: 129 | 
+503   	 00E7	 884A0004		uhalfword(a0) = (0x4)			# LN: 129 | 
+504   	 00E8	 98440000		xmem[_channel + 0] = a0h			# LN: 129 | 
+505   	 00E9	 800800EA		jmp (endif_5)			# LN: 129 | 
+506   	 00EA				cline_129_0:			/* LN: 130 | CYCLE: 0 | RULES: () */ 
+507   	 00EA				endif_5:			/* LN: 129 | CYCLE: 0 | RULES: () */ 
+508   	 00EA				else_5:			/* LN: 129 | CYCLE: 0 | RULES: () */ 
+509   	 00EA	 90750005		i0 = i7 - (0x5)			# LN: 130 | 
+510   	 00EB	 88140000		a0 = xmem[i0]			# LN: 130 | 
+511   	 00EC	 894A0003		uhalfword(a1) = (0x3)			# LN: 130 | 
+512   	 00ED	 00004F08		a0 - a1			# LN: 130 | 
+513   	 00EE	 844800F2		if (a != 0) jmp (else_6)			# LN: 130 | 
+514   	 00EF	 884A0005		uhalfword(a0) = (0x5)			# LN: 130 | 
+515   	 00F0	 98440000		xmem[_channel + 0] = a0h			# LN: 130 | 
+516   	 00F1	 800800F2		jmp (endif_6)			# LN: 130 | 
+517   	 00F2				cline_130_0:			/* LN: 131 | CYCLE: 0 | RULES: () */ 
+518   	 00F2				endif_6:			/* LN: 130 | CYCLE: 0 | RULES: () */ 
+519   	 00F2				else_6:			/* LN: 130 | CYCLE: 0 | RULES: () */ 
+520   	 00F2	 80080174		jmp (switch_end_1)			# LN: 131 | 
+521   	 00F3				cline_131_0:			/* LN: 133 | CYCLE: 0 | RULES: () */ 
+522   	 00F3				case_5:			/* LN: 132 | CYCLE: 0 | RULES: () */ 
+523   	 00F3	 90750005		i0 = i7 - (0x5)			# LN: 133 | 
+524   	 00F4	 88140000		a0 = xmem[i0]			# LN: 133 | 
+525   	 00F5	 00004E80		a0 & a0			# LN: 133 | 
+526   	 00F6	 844800FA		if (a != 0) jmp (else_7)			# LN: 133 | 
+527   	 00F7	 00004DC0		a0 = 0			# LN: 133 | 
+528   	 00F8	 98440000		xmem[_channel + 0] = a0h			# LN: 133 | 
+529   	 00F9	 800800FA		jmp (endif_7)			# LN: 133 | 
+530   	 00FA				cline_133_0:			/* LN: 134 | CYCLE: 0 | RULES: () */ 
+531   	 00FA				endif_7:			/* LN: 133 | CYCLE: 0 | RULES: () */ 
+532   	 00FA				else_7:			/* LN: 133 | CYCLE: 0 | RULES: () */ 
+533   	 00FA	 90750005		i0 = i7 - (0x5)			# LN: 134 | 
+534   	 00FB	 88140000		a0 = xmem[i0]			# LN: 134 | 
+535   	 00FC	 894A0001		uhalfword(a1) = (0x1)			# LN: 134 | 
+536   	 00FD	 00004F08		a0 - a1			# LN: 134 | 
+537   	 00FE	 84480102		if (a != 0) jmp (else_8)			# LN: 134 | 
+538   	 00FF	 884A0001		uhalfword(a0) = (0x1)			# LN: 134 | 
+539   	 0100	 98440000		xmem[_channel + 0] = a0h			# LN: 134 | 
+540   	 0101	 80080102		jmp (endif_8)			# LN: 134 | 
+541   	 0102				cline_134_0:			/* LN: 135 | CYCLE: 0 | RULES: () */ 
+542   	 0102				endif_8:			/* LN: 134 | CYCLE: 0 | RULES: () */ 
+543   	 0102				else_8:			/* LN: 134 | CYCLE: 0 | RULES: () */ 
+544   	 0102	 90750005		i0 = i7 - (0x5)			# LN: 135 | 
+545   	 0103	 88140000		a0 = xmem[i0]			# LN: 135 | 
+546   	 0104	 894A0002		uhalfword(a1) = (0x2)			# LN: 135 | 
+547   	 0105	 00004F08		a0 - a1			# LN: 135 | 
+548   	 0106	 8448010A		if (a != 0) jmp (else_9)			# LN: 135 | 
+549   	 0107	 884A0003		uhalfword(a0) = (0x3)			# LN: 135 | 
+550   	 0108	 98440000		xmem[_channel + 0] = a0h			# LN: 135 | 
+551   	 0109	 8008010A		jmp (endif_9)			# LN: 135 | 
+552   	 010A				cline_135_0:			/* LN: 136 | CYCLE: 0 | RULES: () */ 
+553   	 010A				endif_9:			/* LN: 135 | CYCLE: 0 | RULES: () */ 
+554   	 010A				else_9:			/* LN: 135 | CYCLE: 0 | RULES: () */ 
+555   	 010A	 90750005		i0 = i7 - (0x5)			# LN: 136 | 
+556   	 010B	 88140000		a0 = xmem[i0]			# LN: 136 | 
+557   	 010C	 894A0003		uhalfword(a1) = (0x3)			# LN: 136 | 
+558   	 010D	 00004F08		a0 - a1			# LN: 136 | 
+559   	 010E	 84480112		if (a != 0) jmp (else_10)			# LN: 136 | 
+560   	 010F	 884A0004		uhalfword(a0) = (0x4)			# LN: 136 | 
+561   	 0110	 98440000		xmem[_channel + 0] = a0h			# LN: 136 | 
+562   	 0111	 80080112		jmp (endif_10)			# LN: 136 | 
+563   	 0112				cline_136_0:			/* LN: 137 | CYCLE: 0 | RULES: () */ 
+564   	 0112				endif_10:			/* LN: 136 | CYCLE: 0 | RULES: () */ 
+565   	 0112				else_10:			/* LN: 136 | CYCLE: 0 | RULES: () */ 
+566   	 0112	 90750005		i0 = i7 - (0x5)			# LN: 137 | 
+567   	 0113	 88140000		a0 = xmem[i0]			# LN: 137 | 
+568   	 0114	 894A0004		uhalfword(a1) = (0x4)			# LN: 137 | 
+569   	 0115	 00004F08		a0 - a1			# LN: 137 | 
+570   	 0116	 8448011A		if (a != 0) jmp (else_11)			# LN: 137 | 
+571   	 0117	 884A0005		uhalfword(a0) = (0x5)			# LN: 137 | 
+572   	 0118	 98440000		xmem[_channel + 0] = a0h			# LN: 137 | 
+573   	 0119	 8008011A		jmp (endif_11)			# LN: 137 | 
+574   	 011A				cline_137_0:			/* LN: 138 | CYCLE: 0 | RULES: () */ 
+575   	 011A				endif_11:			/* LN: 137 | CYCLE: 0 | RULES: () */ 
+576   	 011A				else_11:			/* LN: 137 | CYCLE: 0 | RULES: () */ 
+577   	 011A	 80080174		jmp (switch_end_1)			# LN: 138 | 
+578   	 011B				cline_138_0:			/* LN: 140 | CYCLE: 0 | RULES: () */ 
+579   	 011B				case_6:			/* LN: 139 | CYCLE: 0 | RULES: () */ 
+580   	 011B	 90750005		i0 = i7 - (0x5)			# LN: 140 | 
+581   	 011C	 88140000		a0 = xmem[i0]			# LN: 140 | 
+582   	 011D	 00004E80		a0 & a0			# LN: 140 | 
+583   	 011E	 84480122		if (a != 0) jmp (else_12)			# LN: 140 | 
+584   	 011F	 00004DC0		a0 = 0			# LN: 140 | 
+585   	 0120	 98440000		xmem[_channel + 0] = a0h			# LN: 140 | 
+586   	 0121	 80080122		jmp (endif_12)			# LN: 140 | 
+587   	 0122				cline_140_0:			/* LN: 141 | CYCLE: 0 | RULES: () */ 
+588   	 0122				endif_12:			/* LN: 140 | CYCLE: 0 | RULES: () */ 
+589   	 0122				else_12:			/* LN: 140 | CYCLE: 0 | RULES: () */ 
+590   	 0122	 90750005		i0 = i7 - (0x5)			# LN: 141 | 
+591   	 0123	 88140000		a0 = xmem[i0]			# LN: 141 | 
+592   	 0124	 894A0001		uhalfword(a1) = (0x1)			# LN: 141 | 
+593   	 0125	 00004F08		a0 - a1			# LN: 141 | 
+594   	 0126	 8448012A		if (a != 0) jmp (else_13)			# LN: 141 | 
+595   	 0127	 884A0001		uhalfword(a0) = (0x1)			# LN: 141 | 
+596   	 0128	 98440000		xmem[_channel + 0] = a0h			# LN: 141 | 
+597   	 0129	 8008012A		jmp (endif_13)			# LN: 141 | 
+598   	 012A				cline_141_0:			/* LN: 142 | CYCLE: 0 | RULES: () */ 
+599   	 012A				endif_13:			/* LN: 141 | CYCLE: 0 | RULES: () */ 
+600   	 012A				else_13:			/* LN: 141 | CYCLE: 0 | RULES: () */ 
+601   	 012A	 90750005		i0 = i7 - (0x5)			# LN: 142 | 
+602   	 012B	 88140000		a0 = xmem[i0]			# LN: 142 | 
+603   	 012C	 894A0002		uhalfword(a1) = (0x2)			# LN: 142 | 
+604   	 012D	 00004F08		a0 - a1			# LN: 142 | 
+605   	 012E	 84480132		if (a != 0) jmp (else_14)			# LN: 142 | 
+606   	 012F	 884A0002		uhalfword(a0) = (0x2)			# LN: 142 | 
+607   	 0130	 98440000		xmem[_channel + 0] = a0h			# LN: 142 | 
+608   	 0131	 80080132		jmp (endif_14)			# LN: 142 | 
+609   	 0132				cline_142_0:			/* LN: 143 | CYCLE: 0 | RULES: () */ 
+610   	 0132				endif_14:			/* LN: 142 | CYCLE: 0 | RULES: () */ 
+611   	 0132				else_14:			/* LN: 142 | CYCLE: 0 | RULES: () */ 
+612   	 0132	 90750005		i0 = i7 - (0x5)			# LN: 143 | 
+613   	 0133	 88140000		a0 = xmem[i0]			# LN: 143 | 
+614   	 0134	 894A0003		uhalfword(a1) = (0x3)			# LN: 143 | 
+615   	 0135	 00004F08		a0 - a1			# LN: 143 | 
+616   	 0136	 8448013A		if (a != 0) jmp (else_15)			# LN: 143 | 
+617   	 0137	 884A0004		uhalfword(a0) = (0x4)			# LN: 143 | 
+618   	 0138	 98440000		xmem[_channel + 0] = a0h			# LN: 143 | 
+619   	 0139	 8008013A		jmp (endif_15)			# LN: 143 | 
+620   	 013A				cline_143_0:			/* LN: 144 | CYCLE: 0 | RULES: () */ 
+621   	 013A				endif_15:			/* LN: 143 | CYCLE: 0 | RULES: () */ 
+622   	 013A				else_15:			/* LN: 143 | CYCLE: 0 | RULES: () */ 
+623   	 013A	 90750005		i0 = i7 - (0x5)			# LN: 144 | 
+624   	 013B	 88140000		a0 = xmem[i0]			# LN: 144 | 
+625   	 013C	 894A0004		uhalfword(a1) = (0x4)			# LN: 144 | 
+626   	 013D	 00004F08		a0 - a1			# LN: 144 | 
+627   	 013E	 84480142		if (a != 0) jmp (else_16)			# LN: 144 | 
+628   	 013F	 884A0005		uhalfword(a0) = (0x5)			# LN: 144 | 
+629   	 0140	 98440000		xmem[_channel + 0] = a0h			# LN: 144 | 
+630   	 0141	 80080142		jmp (endif_16)			# LN: 144 | 
+631   	 0142				cline_144_0:			/* LN: 145 | CYCLE: 0 | RULES: () */ 
+632   	 0142				endif_16:			/* LN: 144 | CYCLE: 0 | RULES: () */ 
+633   	 0142				else_16:			/* LN: 144 | CYCLE: 0 | RULES: () */ 
+634   	 0142	 80080174		jmp (switch_end_1)			# LN: 145 | 
+635   	 0143				cline_145_0:			/* LN: 147 | CYCLE: 0 | RULES: () */ 
+636   	 0143				case_7:			/* LN: 146 | CYCLE: 0 | RULES: () */ 
+637   	 0143	 90750005		i0 = i7 - (0x5)			# LN: 147 | 
+638   	 0144	 88140000		a0 = xmem[i0]			# LN: 147 | 
+639   	 0145	 00004E80		a0 & a0			# LN: 147 | 
+640   	 0146	 8448014A		if (a != 0) jmp (else_17)			# LN: 147 | 
+641   	 0147	 00004DC0		a0 = 0			# LN: 147 | 
+642   	 0148	 98440000		xmem[_channel + 0] = a0h			# LN: 147 | 
+643   	 0149	 8008014A		jmp (endif_17)			# LN: 147 | 
+644   	 014A				cline_147_0:			/* LN: 148 | CYCLE: 0 | RULES: () */ 
+645   	 014A				endif_17:			/* LN: 147 | CYCLE: 0 | RULES: () */ 
+646   	 014A				else_17:			/* LN: 147 | CYCLE: 0 | RULES: () */ 
+647   	 014A	 90750005		i0 = i7 - (0x5)			# LN: 148 | 
+648   	 014B	 88140000		a0 = xmem[i0]			# LN: 148 | 
+649   	 014C	 894A0001		uhalfword(a1) = (0x1)			# LN: 148 | 
+650   	 014D	 00004F08		a0 - a1			# LN: 148 | 
+651   	 014E	 84480152		if (a != 0) jmp (else_18)			# LN: 148 | 
+652   	 014F	 884A0001		uhalfword(a0) = (0x1)			# LN: 148 | 
+653   	 0150	 98440000		xmem[_channel + 0] = a0h			# LN: 148 | 
+654   	 0151	 80080152		jmp (endif_18)			# LN: 148 | 
+655   	 0152				cline_148_0:			/* LN: 149 | CYCLE: 0 | RULES: () */ 
+656   	 0152				endif_18:			/* LN: 148 | CYCLE: 0 | RULES: () */ 
+657   	 0152				else_18:			/* LN: 148 | CYCLE: 0 | RULES: () */ 
+658   	 0152	 90750005		i0 = i7 - (0x5)			# LN: 149 | 
+659   	 0153	 88140000		a0 = xmem[i0]			# LN: 149 | 
+660   	 0154	 894A0002		uhalfword(a1) = (0x2)			# LN: 149 | 
+661   	 0155	 00004F08		a0 - a1			# LN: 149 | 
+662   	 0156	 8448015A		if (a != 0) jmp (else_19)			# LN: 149 | 
+663   	 0157	 884A0002		uhalfword(a0) = (0x2)			# LN: 149 | 
+664   	 0158	 98440000		xmem[_channel + 0] = a0h			# LN: 149 | 
+665   	 0159	 8008015A		jmp (endif_19)			# LN: 149 | 
+666   	 015A				cline_149_0:			/* LN: 150 | CYCLE: 0 | RULES: () */ 
+667   	 015A				endif_19:			/* LN: 149 | CYCLE: 0 | RULES: () */ 
+668   	 015A				else_19:			/* LN: 149 | CYCLE: 0 | RULES: () */ 
+669   	 015A	 90750005		i0 = i7 - (0x5)			# LN: 150 | 
+670   	 015B	 88140000		a0 = xmem[i0]			# LN: 150 | 
+671   	 015C	 894A0003		uhalfword(a1) = (0x3)			# LN: 150 | 
+672   	 015D	 00004F08		a0 - a1			# LN: 150 | 
+673   	 015E	 84480162		if (a != 0) jmp (else_20)			# LN: 150 | 
+674   	 015F	 884A0003		uhalfword(a0) = (0x3)			# LN: 150 | 
+675   	 0160	 98440000		xmem[_channel + 0] = a0h			# LN: 150 | 
+676   	 0161	 80080162		jmp (endif_20)			# LN: 150 | 
+677   	 0162				cline_150_0:			/* LN: 151 | CYCLE: 0 | RULES: () */ 
+678   	 0162				endif_20:			/* LN: 150 | CYCLE: 0 | RULES: () */ 
+679   	 0162				else_20:			/* LN: 150 | CYCLE: 0 | RULES: () */ 
+680   	 0162	 90750005		i0 = i7 - (0x5)			# LN: 151 | 
+681   	 0163	 88140000		a0 = xmem[i0]			# LN: 151 | 
+682   	 0164	 894A0004		uhalfword(a1) = (0x4)			# LN: 151 | 
+683   	 0165	 00004F08		a0 - a1			# LN: 151 | 
+684   	 0166	 8448016A		if (a != 0) jmp (else_21)			# LN: 151 | 
+685   	 0167	 884A0004		uhalfword(a0) = (0x4)			# LN: 151 | 
+686   	 0168	 98440000		xmem[_channel + 0] = a0h			# LN: 151 | 
+687   	 0169	 8008016A		jmp (endif_21)			# LN: 151 | 
+688   	 016A				cline_151_0:			/* LN: 152 | CYCLE: 0 | RULES: () */ 
+689   	 016A				endif_21:			/* LN: 151 | CYCLE: 0 | RULES: () */ 
+690   	 016A				else_21:			/* LN: 151 | CYCLE: 0 | RULES: () */ 
+691   	 016A	 90750005		i0 = i7 - (0x5)			# LN: 152 | 
+692   	 016B	 88140000		a0 = xmem[i0]			# LN: 152 | 
+693   	 016C	 894A0005		uhalfword(a1) = (0x5)			# LN: 152 | 
+694   	 016D	 00004F08		a0 - a1			# LN: 152 | 
+695   	 016E	 84480172		if (a != 0) jmp (else_22)			# LN: 152 | 
+696   	 016F	 884A0005		uhalfword(a0) = (0x5)			# LN: 152 | 
+697   	 0170	 98440000		xmem[_channel + 0] = a0h			# LN: 152 | 
+698   	 0171	 80080172		jmp (endif_22)			# LN: 152 | 
+699   	 0172				cline_152_0:			/* LN: 153 | CYCLE: 0 | RULES: () */ 
+700   	 0172				endif_22:			/* LN: 152 | CYCLE: 0 | RULES: () */ 
+701   	 0172				else_22:			/* LN: 152 | CYCLE: 0 | RULES: () */ 
+702   	 0172	 80080174		jmp (switch_end_1)			# LN: 153 | 
+703   	 0173				cline_153_0:			/* LN: 155 | CYCLE: 0 | RULES: () */ 
+704   	 0173				default_1:			/* LN: 154 | CYCLE: 0 | RULES: () */ 
+705   	 0173	 80080174		jmp (switch_end_1)			# LN: 155 | 
+706   	 0174				cline_155_0:			/* LN: 157 | CYCLE: 0 | RULES: () */ 
+707   	 0174				switch_end_1:			/* LN: 124 | CYCLE: 0 | RULES: () */ 
+708   	 0174	 88040000		a0 = xmem[_channel + 0]			# LN: 157 | 
+709   	 0175	 00004EC0		a0 = a0 << 4			# LN: 157 | 
+710   	 0176	 48707FFF		i0 = a0			# LN: 157 | 
+711   	 0177	 91750004		i1 = i7 - (0x4)			# LN: 157 | 
+712   	 0178	 80050000		i0 = i0 + (_sampleBuffer + 0)			# LN: 157 | 
+713   	 0179	 88140001		a0 = xmem[i1]			# LN: 157 | 
+714   	 017A	 09707FFF		a1 = i0			# LN: 157 | 
+715   	 017B	 00004480		a0 = a1 + a0			# LN: 157 | 
+716   	 017C	 98090030		AnyReg(i0, a0h)			# LN: 157 | 
+717   	 017D	 91750006		i1 = i7 - (0x6)			# LN: 157 | 
+718   	 017E	 88140000		a0 = xmem[i0]			# LN: 157 | 
+719   	 017F	 98540001		xmem[i1] = a0h			# LN: 157 | 
+720   	 0180				cline_157_0:			/* LN: 158 | CYCLE: 0 | RULES: () */ 
+721   	 0180	 88040000		a0 = xmem[_wav_out + 0]			# LN: 158 | 
+722   	 0181	 98090030		AnyReg(i0, a0h)			# LN: 158 | 
+723   	 0182	 91750006		i1 = i7 - (0x6)			# LN: 158 | 
+724   	 0183	 88140001		a0 = xmem[i1]			# LN: 158 | 
+725   	 0184	 80880000		call (_cl_wavwrite_sendsample)			# LN: 158 | 
+726   	 0185				cline_158_0:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
+727   	 0185				init_latch_label_3:			/* LN: 159 | CYCLE: 0 | RULES: () */ 
+728   	 0185	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
+729   	 0186	 88140000		a0 = xmem[i0]			# LN: 121 | 
+730   	 0187	 894A0001		uhalfword(a1) = (0x1)			# LN: 121 | 
+731   	 0188	 00004408		a0 = a0 + a1			# LN: 121 | 
+732   	 0189	 90750005		i0 = i7 - (0x5)			# LN: 121 | 
+733   	 018A	 98540000		xmem[i0] = a0h			# LN: 121 | 
+734   	 018B	 800800BC		jmp (for_5)			# LN: 121 | 
+735   	 018C				cline_121_1:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
+736   	 018C				init_latch_label_4:			/* LN: 160 | CYCLE: 0 | RULES: () */ 
+737   	 018C				for_end_5:			/* LN: 121 | CYCLE: 0 | RULES: () */ 
+738   	 018C	 90750004		i0 = i7 - (0x4)			# LN: 119 | 
+739   	 018D	 88140000		a0 = xmem[i0]			# LN: 119 | 
+740   	 018E	 894A0001		uhalfword(a1) = (0x1)			# LN: 119 | 
+741   	 018F	 00004408		a0 = a0 + a1			# LN: 119 | 
+742   	 0190	 90750004		i0 = i7 - (0x4)			# LN: 119 | 
+743   	 0191				label_end_93:			# LN: 119 | CYCLE: 5 | RULES: ()
+744   	 0191	 98540000		xmem[i0] = a0h			# LN: 119 | 
+745   	 0192				cline_119_1:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
+746   	 0192				init_latch_label_5:			/* LN: 161 | CYCLE: 0 | RULES: () */ 
+747   	 0192				for_end_4:			/* LN: 119 | CYCLE: 0 | RULES: () */ 
+748   	 0192	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
+749   	 0193	 88140000		a0 = xmem[i0]			# LN: 102 | 
+750   	 0194	 894A0001		uhalfword(a1) = (0x1)			# LN: 102 | 
+751   	 0195	 00004408		a0 = a0 + a1			# LN: 102 | 
+752   	 0196	 90750003		i0 = i7 - (0x3)			# LN: 102 | 
+753   	 0197	 98540000		xmem[i0] = a0h			# LN: 102 | 
+754   	 0198	 80080072		jmp (for_1)			# LN: 102 | 
+755   	 0199				cline_102_1:			/* LN: 166 | CYCLE: 0 | RULES: () */ 
+756   	 0199				for_end_1:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
+757   	 0199	 B0040000		i0 = xmem[_wav_in + 0]			# LN: 166 | 
+758   	 019A	 80880000		call (_cl_wavread_close)			# LN: 166 | 
+759   	 019B				cline_166_0:			/* LN: 167 | CYCLE: 0 | RULES: () */ 
+760   	 019B	 88040000		a0 = xmem[_wav_out + 0]			# LN: 167 | 
+761   	 019C	 98090030		AnyReg(i0, a0h)			# LN: 167 | 
+762   	 019D	 80880000		call (_cl_wavwrite_close)			# LN: 167 | 
+763   	 019E				cline_167_0:			/* LN: 170 | CYCLE: 0 | RULES: () */ 
+764   	 019E	 00004DC0		a0 = 0			# LN: 170 | 
+765   	 019F	 800801A0		jmp (__epilogue_254)			# LN: 170 | 
+766   	 01A0				cline_170_0:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
+767   	 01A0				__epilogue_254:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
+768   	 01A0	 97750006		i7 = i7 - (0x6)			# LN: 171 | 
+769   	 01A1	 02177FFF		i7 -= 1			# LN: 171 | 
+770   	 01A2	 B2140027		i2 = xmem[i7]; i7 -= 1			# LN: 171, 171 | 
+771   	 01A3	 81880000		ret			# LN: 171 | 
+772   						(null)
 				 SYMBOL TABLE 
 
     Name                                                                                    Type                  Value 
@@ -1157,8 +1160,11 @@ _VERSION_                                                                       
 _WavInputName                                                                   			  Public Relocatable       main_GEN_0000:0000H
 _WavOutputName                                                                  			  Public Relocatable       main_GEN_0001:0000H
 __CASM_VER__                                                                    			  Unused Variable		        0 (701H)
+___TIMER0_COUNT                                                                 					 External   
+___TIMER1_COUNT                                                                 					 External   
+___TIMER1_ENABLE                                                                					 External   
 __div                                                                           					 External   
-__epilogue_240                                                                  			         Relocatable         main_GEN_0019:01A0H
+__epilogue_254                                                                  			         Relocatable         main_GEN_0019:01A0H
 __mod                                                                           					 External   
 __start                                                                         					 External   
 _bitsPerSample                                                                  			  Public Relocatable       main_GEN_0002:0000H

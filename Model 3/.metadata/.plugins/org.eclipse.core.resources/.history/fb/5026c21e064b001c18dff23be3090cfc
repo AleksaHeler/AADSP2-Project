@@ -27,8 +27,6 @@ void processing(__memX fract input[][BLOCK_SIZE], __memX fract output[][BLOCK_SI
 	int i;
 	unsigned long long start, end, total_cycles;
 
-	start = cl_get_cycle_count();
-
 	p_L_channel_in = input[L_CHANNEL];
 	p_R_channel_in = input[R_CHANNEL];
 
@@ -102,8 +100,4 @@ void processing(__memX fract input[][BLOCK_SIZE], __memX fract output[][BLOCK_SI
 			*p_LFE_channel_out++ = *p_LFE_channel_out >> 1; // divide all by 2 to compensate for extra 6 dB gain boost
 		}
 	}
-
-	end = cl_get_cycle_count();
-	total_cycles = end - start;
-	printf("Processing cycles: %llu \n", total_cycles);
 }

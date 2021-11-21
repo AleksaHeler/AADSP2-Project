@@ -1,5 +1,8 @@
 	.public _WavInputName
 	.public _WavOutputName
+	.extern ___TIMER0_COUNT
+	.extern ___TIMER1_COUNT
+	.extern ___TIMER1_ENABLE
 	.public _bitsPerSample
 	.public _channel
 	.public _gain
@@ -241,7 +244,7 @@ cline_42_0:			/* LN: 44 | CYCLE: 0 | RULES: () */
 	call (_printf)			# LN: 44 | 
 cline_44_0:			/* LN: 45 | CYCLE: 0 | RULES: () */ 
 	halfword(a0) = (0xffff)			# LN: 45 | 
-	jmp (__epilogue_240)			# LN: 45 | 
+	jmp (__epilogue_254)			# LN: 45 | 
 cline_45_0:			/* LN: 52 | CYCLE: 0 | RULES: () */ 
 endif_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
 else_0:			/* LN: 42 | CYCLE: 0 | RULES: () */ 
@@ -339,7 +342,7 @@ cline_86_0:			/* LN: 88 | CYCLE: 0 | RULES: () */
 	call (_printf)			# LN: 88 | 
 cline_88_0:			/* LN: 89 | CYCLE: 0 | RULES: () */ 
 	halfword(a0) = (0xffff)			# LN: 89 | 
-	jmp (__epilogue_240)			# LN: 89 | 
+	jmp (__epilogue_254)			# LN: 89 | 
 cline_89_0:			/* LN: 102 | CYCLE: 0 | RULES: () */ 
 endif_1:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
 else_1:			/* LN: 86 | CYCLE: 0 | RULES: () */ 
@@ -759,9 +762,9 @@ cline_166_0:			/* LN: 167 | CYCLE: 0 | RULES: () */
 	call (_cl_wavwrite_close)			# LN: 167 | 
 cline_167_0:			/* LN: 170 | CYCLE: 0 | RULES: () */ 
 	a0 = 0			# LN: 170 | 
-	jmp (__epilogue_240)			# LN: 170 | 
+	jmp (__epilogue_254)			# LN: 170 | 
 cline_170_0:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
-__epilogue_240:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
+__epilogue_254:			/* LN: 171 | CYCLE: 0 | RULES: () */ 
 	i7 = i7 - (0x6)			# LN: 171 | 
 	i7 -= 1			# LN: 171 | 
 	i2 = xmem[i7]; i7 -= 1			# LN: 171, 171 | 

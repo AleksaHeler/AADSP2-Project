@@ -6,7 +6,6 @@
 #include <string.h>
 #include <dsplib\wavefile.h>
 #include <stdfix.h>
-#include <dsplib/timers.h>
 
 
 #include "common.h"
